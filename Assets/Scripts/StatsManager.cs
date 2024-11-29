@@ -1,10 +1,11 @@
+using TMPro;
 using UnityEngine;
 using UnityEngine.Events;
 
 public class StatsManager : MonoBehaviour
 {
     [SerializeField]
-    float health = 100f;
+    public float health = 100f;
     public int fireExtinguisher = 5;
 
     [SerializeField] private int[] playerPosition;
