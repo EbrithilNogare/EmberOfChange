@@ -10,6 +10,7 @@
 
 ## Versions
 
+[![](https://img.shields.io/badge/itch.io-555555?style=for-the-badge&logo=itchdotio&logoColor=white&cacheSeconds=3000)](https://ebrithilnogare.itch.io/ember-of-change)
 [![](https://img.shields.io/badge/Online%20version-555555?style=for-the-badge&logo=webgl&logoColor=white&cacheSeconds=3000)](https://ebrithilnogare.github.io/EmberOfChange/)
 
 ### Unity version
