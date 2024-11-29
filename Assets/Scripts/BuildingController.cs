@@ -7,7 +7,7 @@ public class BuildingController : MonoBehaviour
         Empty,
         Room,
         Stairs,
-        RoomOnFire,
+        Fire,
         RoomWithPerson
     }
 
@@ -27,7 +27,7 @@ public class BuildingController : MonoBehaviour
     public float roomWidth = 1f;  // Width of each room
     public float roomHeight = 1f; // Height of each room
 
-    private RoomType[,] map;
+    public RoomType[,] map;
     private GameObject[,] roomObjects;
 
     void Start()
@@ -49,7 +49,7 @@ public class BuildingController : MonoBehaviour
                 map[x, y] = RoomType.Room;
             }
 
-            while (stairsPlaced < 2)
+            while (stairsPlaced < 2 && y != height - 1)
             {
                 int stairX = Random.Range(0, width);
                 if (map[stairX, y] != RoomType.Stairs)
@@ -60,7 +60,7 @@ public class BuildingController : MonoBehaviour
             }
         }
 
-        PlaceRandomElements(RoomType.RoomOnFire, fireCount);
+        PlaceRandomElements(RoomType.Fire, fireCount);
         PlaceRandomElements(RoomType.RoomWithPerson, peopleCount);
     }
 
@@ -104,7 +104,7 @@ public class BuildingController : MonoBehaviour
                 return roomPrefab;
             case RoomType.Stairs:
                 return stairsPrefab;
-            case RoomType.RoomOnFire:
+            case RoomType.Fire:
                 return roomOnFirePrefab;
             case RoomType.RoomWithPerson:
                 return roomWithPersonPrefab;
@@ -149,9 +149,9 @@ public class BuildingController : MonoBehaviour
 
     public void ChangeRoomToFire(int x, int y)
     {
-        if (map[x, y] != RoomType.RoomOnFire)
+        if (map[x, y] != RoomType.Fire)
         {
-            map[x, y] = RoomType.RoomOnFire;
+            map[x, y] = RoomType.Fire;
             Destroy(roomObjects[x, y]);
             roomObjects[x, y] = Instantiate(roomOnFirePrefab, new Vector3(x * roomWidth, y * roomHeight, 0), Quaternion.identity);
         }
