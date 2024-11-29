@@ -169,7 +169,7 @@ jobs:
           done
 
   deploy:
-    if: false # 🔴 Enable / disable ITCH deploy
+    if: true # 🔴 Enable / disable ITCH deploy
     name: Butler Push to Itch
     runs-on: ubuntu-latest
     strategy:
@@ -193,6 +193,6 @@ jobs:
         env:
           BUTLER_CREDENTIALS: ${{ secrets.ITCH_IO_CREDENTIALS }}
           CHANNEL: ${{ matrix.targetPlatform.itchChannel }}
-          ITCH_GAME: luciditydungeon # 🔴 Name of the game on Itch
+          ITCH_GAME: ember-of-change # 🔴 Name of the game on Itch
           ITCH_USER: ebrithilnogare # 🔴 Itch username
           PACKAGE: build/${{ github.event.repository.name }}-${{ matrix.targetPlatform.platform }}
