@@ -1,21 +1,18 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
-using UnityEngine.Video;
 
 public class StatsManager : MonoBehaviour
 {
     [SerializeField]
     float health = 100f;
-    [SerializeField] int fireExtinguisher = 5;
+    public int fireExtinguisher = 5;
 
     [SerializeField] private int[] playerPosition;
-    
+
     public UnityEvent OnDeath;
     public UnityEvent OnHit;
     public UnityEvent<int> OnExtinguisherUpdate;
-    
+
     void Awake()
     {
         health = 100f;
@@ -26,7 +23,7 @@ public class StatsManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
+
     }
 
     public void GetDamage(float damage)
@@ -44,7 +41,7 @@ public class StatsManager : MonoBehaviour
     {
         fireExtinguisher -= 1;
         OnExtinguisherUpdate.Invoke(fireExtinguisher);
-        
+
     }
 
     public void FindExtinguisher()
@@ -52,6 +49,4 @@ public class StatsManager : MonoBehaviour
         fireExtinguisher += 1;
         OnExtinguisherUpdate.Invoke(fireExtinguisher);
     }
-
-    
 }

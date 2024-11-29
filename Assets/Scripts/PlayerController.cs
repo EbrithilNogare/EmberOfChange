@@ -4,28 +4,28 @@ using static BuildingController;
 public class PlayerController : MonoBehaviour
 {
     public BuildingController buildingController;
-    public int fireExtinguishers;
+    public StatsManager statsManager;
     public Vector2Int playerPosition;
     public Vector2 stepSize;
-    private bool isFightingFire;
+
+    private bool extinguishedFireThisTurn;
 
     void Start()
     {
+        statsManager = FindObjectOfType<StatsManager>();
+
         transform.position = new Vector3(playerPosition.x * stepSize.x, playerPosition.y * stepSize.y, 0);
     }
 
     void Update()
     {
         HandleMovement();
-        HandleFireExtinguisherUsage();
     }
 
     void HandleMovement()
     {
-        if (isFightingFire)
-            return;
-
         Vector2Int newPosition = playerPosition;
+        extinguishedFireThisTurn = false;
 
         if (Input.GetKeyDown(KeyCode.W))
         {
@@ -44,7 +44,11 @@ public class PlayerController : MonoBehaviour
             newPosition = new Vector2Int(playerPosition.x + 1, playerPosition.y);
         }
 
-        if (IsValidMove(newPosition, playerPosition))
+        if (CanExtinguishFire(newPosition))
+        {
+            ExtinguishFire(newPosition);
+        }
+        else if (!extinguishedFireThisTurn && IsValidMove(newPosition, playerPosition))
         {
             playerPosition = newPosition;
             transform.position = new Vector3(playerPosition.x * stepSize.x, playerPosition.y * stepSize.y, 0);
@@ -59,11 +63,11 @@ public class PlayerController : MonoBehaviour
         RoomType oldRoom = buildingController.map[oldPosition.x, oldPosition.y];
         RoomType newRoom = buildingController.map[newPosition.x, newPosition.y];
 
-        if ((oldPosition - newPosition).y < 0)
-            return oldRoom == RoomType.Stairs;
+        if ((oldPosition - newPosition).y < 0 && oldRoom != RoomType.Stairs)
+            return false;
 
-        if ((oldPosition - newPosition).y > 0)
-            return newRoom == RoomType.Stairs;
+        if ((oldPosition - newPosition).y > 0 && newRoom != RoomType.Stairs)
+            return false;
 
         if (newRoom == RoomType.Stairs || newRoom == RoomType.Room || newRoom == RoomType.RoomWithPerson)
             return true;
@@ -71,28 +75,26 @@ public class PlayerController : MonoBehaviour
         return false;
     }
 
-    void HandleFireExtinguisherUsage()
+    bool CanExtinguishFire(Vector2Int position)
     {
-        if (fireExtinguishers <= 0)
-            return;
+        if (statsManager.fireExtinguisher <= 0)
+            return false;
 
-        RoomType currentRoomType = buildingController.map[playerPosition.x, playerPosition.y];
-
-        if (currentRoomType == RoomType.Fire && !isFightingFire)
+        if (position.x >= 0 && position.y >= 0 && position.x < buildingController.map.GetLength(0) && position.y < buildingController.map.GetLength(1))
         {
-            if (Input.GetKeyDown(KeyCode.Space))
-            {
-                isFightingFire = true;
-                fireExtinguishers--;
-                buildingController.map[playerPosition.x, playerPosition.y] = RoomType.Empty;
-            }
+            return buildingController.map[position.x, position.y] == RoomType.Fire;
         }
-        else if (currentRoomType != RoomType.Fire && isFightingFire)
+
+        return false;
+    }
+
+    void ExtinguishFire(Vector2Int position)
+    {
+        if (statsManager.fireExtinguisher > 0)
         {
-            if (Input.GetKeyDown(KeyCode.Space))
-            {
-                isFightingFire = false;
-            }
+            statsManager.UseExtinguisher();
+            buildingController.ChangeRoomToNotFire(position.x, position.y);
+            extinguishedFireThisTurn = true;
         }
     }
 }

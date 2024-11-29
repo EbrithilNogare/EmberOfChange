@@ -168,7 +168,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   width: 8
   height: 5
-  fireCount: 5
+  fireCount: 7
   peopleCount: 5
   roomPrefab: {fileID: 8994669005690676939, guid: 3b92c5d02f6fd674d9d09d1fd791bbe9, type: 3}
   stairsPrefab: {fileID: 8994669005690676939, guid: 0df5bb7c9add57d4ead8af478b29c829, type: 3}
@@ -176,6 +176,62 @@ MonoBehaviour:
   roomWithPersonPrefab: {fileID: 8994669005690676939, guid: 5b90d4b3ea55d8547beb598ec3580539, type: 3}
   roomWidth: 3
   roomHeight: 3
+--- !u!1 &292465015
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 292465017}
+  - component: {fileID: 292465016}
+  m_Layer: 0
+  m_Name: StatsManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &292465016
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 292465015}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c58c3c13994a06a45b6cf69cefaf5ae0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  health: 100
+  fireExtinguisher: 5
+  playerPosition: 
+  OnDeath:
+    m_PersistentCalls:
+      m_Calls: []
+  OnHit:
+    m_PersistentCalls:
+      m_Calls: []
+  OnExtinguisherUpdate:
+    m_PersistentCalls:
+      m_Calls: []
+--- !u!4 &292465017
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 292465015}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 10.90299, y: 3.5966034, z: 0.2591644}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &556123655
 GameObject:
   m_ObjectHideFlags: 0
@@ -329,6 +385,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   buildingController: {fileID: 31700880}
+  statsManager: {fileID: 0}
   fireExtinguishers: 5
   playerPosition: {x: 3, y: 0}
   stepSize: {x: 3, y: 3}
@@ -664,3 +721,4 @@ SceneRoots:
   - {fileID: 1879512145}
   - {fileID: 736105831}
   - {fileID: 1342014056}
+  - {fileID: 292465017}

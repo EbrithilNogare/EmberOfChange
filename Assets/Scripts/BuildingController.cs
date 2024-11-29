@@ -70,7 +70,7 @@ public class BuildingController : MonoBehaviour
         while (placed < count)
         {
             int x = Random.Range(0, width);
-            int y = Random.Range(0, height);
+            int y = Random.Range(1, height);
             if (map[x, y] == RoomType.Room)
             {
                 map[x, y] = type;
@@ -153,7 +153,17 @@ public class BuildingController : MonoBehaviour
         {
             map[x, y] = RoomType.Fire;
             Destroy(roomObjects[x, y]);
-            roomObjects[x, y] = Instantiate(roomOnFirePrefab, new Vector3(x * roomWidth, y * roomHeight, 0), Quaternion.identity);
+            roomObjects[x, y] = Instantiate(roomOnFirePrefab, new Vector3(x * roomWidth, y * roomHeight, 0), Quaternion.identity, transform);
+        }
+    }
+
+    public void ChangeRoomToNotFire(int x, int y)
+    {
+        if (map[x, y] == RoomType.Fire)
+        {
+            map[x, y] = RoomType.Room;
+            Destroy(roomObjects[x, y]);
+            roomObjects[x, y] = Instantiate(roomPrefab, new Vector3(x * roomWidth, y * roomHeight, 0), Quaternion.identity, transform);
         }
     }
 
