@@ -49,7 +49,6 @@ MonoBehaviour:
   fireExtinguisherCount: 10
   fireCount: 23
   peopleCount: 10
-  fireExtinguisherPrefab: {fileID: 6741263600372567620, guid: c8943ff74a835754d8d48fd5171601b5, type: 3}
   passPrefab: {fileID: 8994669005690676939, guid: 3b92c5d02f6fd674d9d09d1fd791bbe9, type: 3}
   stairsPrefab: {fileID: 8994669005690676939, guid: 0df5bb7c9add57d4ead8af478b29c829, type: 3}
   leftWallPrefab: {fileID: 8994669005690676939, guid: 8b7cbcd67a7fff7459baf3d14904383e, type: 3}
@@ -57,8 +56,10 @@ MonoBehaviour:
   leftDoorPrefab: {fileID: 8994669005690676939, guid: e4646904f35f96f4e9d3f1d34f8a4686, type: 3}
   rightDoorPrefab: {fileID: 8994669005690676939, guid: d8df6481646a2f143b634ca81d15f8cb, type: 3}
   outsideStairsPrefab: {fileID: 8994669005690676939, guid: c4e18a61d076e784c96a2a422e4abc88, type: 3}
-  personPrefab: {fileID: 8994669005690676939, guid: 5b90d4b3ea55d8547beb598ec3580539, type: 3}
-  firePrefab: {fileID: 8994669005690676939, guid: 7c5bf5a639c98554180210dc21717e1c, type: 3}
+  fireExtinguisherPrefab: {fileID: 6741263600372567620, guid: c8943ff74a835754d8d48fd5171601b5, type: 3}
+  firePrefab: {fileID: 8997349515218818118, guid: f7f712f0cc257bb4ca904f5263ba356a, type: 3}
+  animalsPrefab:
+  - {fileID: 8997349515218818118, guid: b37d6762f1582074e80ce740b5dbf95b, type: 3}
   roomWidth: 3
   roomHeight: 3
   OnRoomDestroyed:

@@ -35,8 +35,7 @@ public class BuildingController : MonoBehaviour
     public int fireCount;
     public int peopleCount;
 
-    [Header("Prefab References")]
-    public GameObject fireExtinguisherPrefab;
+    [Header("Prefab Room References")]
 
     public GameObject passPrefab;
     public GameObject stairsPrefab;
@@ -46,8 +45,10 @@ public class BuildingController : MonoBehaviour
     public GameObject rightDoorPrefab;
     public GameObject outsideStairsPrefab;
 
-    public GameObject personPrefab;
+    [Header("Prefab Inner References")]
+    public GameObject fireExtinguisherPrefab;
     public GameObject firePrefab;
+    public GameObject[] animalsPrefab;
 
     [Header("Room Dimensions")]
     public float roomWidth;
@@ -146,14 +147,31 @@ public class BuildingController : MonoBehaviour
                     room.roomGameObject = Instantiate(prefab, position, Quaternion.identity, transform);
                     map[x, y] = room;
                 }
+
+                if (room.onFire)
+                {
+                    Vector3 position = new Vector3(x * roomWidth, y * roomHeight, 0);
+                    room.innerGameObject = Instantiate(firePrefab, position, Quaternion.identity, transform);
+                }
+
+                if (room.containsFireExtinguisher)
+                {
+                    Vector3 position = new Vector3(x * roomWidth, y * roomHeight, 0);
+                    room.innerGameObject = Instantiate(fireExtinguisherPrefab, position, Quaternion.identity, transform);
+                }
+
+                if (room.withHuman)
+                {
+                    int randomAnimalIndex = Random.Range(0, animalsPrefab.Length);
+                    Vector3 position = new Vector3(x * roomWidth, y * roomHeight, 0);
+                    room.innerGameObject = Instantiate(animalsPrefab[randomAnimalIndex], position, Quaternion.identity, transform);
+                }
             }
         }
     }
 
     GameObject GetPrefabForRoom(Room room)
     {
-        if (room.onFire) return firePrefab;
-        if (room.withHuman) return personPrefab;
         return room.type switch
         {
             RoomType.Pass => passPrefab,

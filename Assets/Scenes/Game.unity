@@ -1592,16 +1592,24 @@ PrefabInstance:
     m_TransformParent: {fileID: 0}
     m_Modifications:
     - target: {fileID: 2548272981117986925, guid: 74f0e5278ce00c54f939628f671ff284, type: 3}
-      propertyPath: m_Enabled
-      value: 1
+      propertyPath: animalsPrefab.Array.size
+      value: 4
       objectReference: {fileID: 0}
+    - target: {fileID: 2548272981117986925, guid: 74f0e5278ce00c54f939628f671ff284, type: 3}
+      propertyPath: animalsPrefab.Array.data[1]
+      value: 
+      objectReference: {fileID: 8997349515218818118, guid: 2035148fe3384b44ca0f05b6840d1801, type: 3}
+    - target: {fileID: 2548272981117986925, guid: 74f0e5278ce00c54f939628f671ff284, type: 3}
+      propertyPath: animalsPrefab.Array.data[2]
+      value: 
+      objectReference: {fileID: 8997349515218818118, guid: 5a86fdaf1e6463b4294794f916dd19f5, type: 3}
+    - target: {fileID: 2548272981117986925, guid: 74f0e5278ce00c54f939628f671ff284, type: 3}
+      propertyPath: animalsPrefab.Array.data[3]
+      value: 
+      objectReference: {fileID: 8997349515218818118, guid: 597ca960258787a4c935b0133e40a0c6, type: 3}
     - target: {fileID: 5238924268303452095, guid: 74f0e5278ce00c54f939628f671ff284, type: 3}
       propertyPath: m_Name
       value: Building
-      objectReference: {fileID: 0}
-    - target: {fileID: 5238924268303452095, guid: 74f0e5278ce00c54f939628f671ff284, type: 3}
-      propertyPath: m_IsActive
-      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 6782839305429341827, guid: 74f0e5278ce00c54f939628f671ff284, type: 3}
       propertyPath: m_LocalPosition.x
