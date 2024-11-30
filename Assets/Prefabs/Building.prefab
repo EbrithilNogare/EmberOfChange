@@ -47,7 +47,7 @@ MonoBehaviour:
   width: 10
   height: 20
   fireExtinguisherCount: 10
-  fireCount: 23
+  fireCount: 16
   peopleCount: 10
   passPrefab: {fileID: 8994669005690676939, guid: 3b92c5d02f6fd674d9d09d1fd791bbe9, type: 3}
   passWithDoorsPrefab: {fileID: 8994669005690676939, guid: e5ee5d27d26794a47ae87cc304bc5314, type: 3}
@@ -69,3 +69,4 @@ MonoBehaviour:
   OnRoomDestroyed:
     m_PersistentCalls:
       m_Calls: []
+  randomEventManager: {fileID: 0}
