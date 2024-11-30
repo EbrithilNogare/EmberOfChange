@@ -82,16 +82,16 @@ public class RandomEventManager : MonoBehaviour
 
     void FillFireMatrix()
     {
-        for (int k = 0; k < buildingController.map.GetLength(0); k++)
+        for (int y = 0; y < buildingController.map.GetLength(1); y++)
         {
-            for (int l = 0; l < buildingController.map.GetLength(1); l++)
+            for (int x = 0; x < buildingController.map.GetLength(0); x++)
             {
                 BuildingController.Room val;
-                val = buildingController.map[k, l];
+                val = buildingController.map[x, y];
 
                 if (val.onFire && val.type != BuildingController.RoomType.Empty)
                 {
-                    ProbabilityFireMatrix[k, l] = new FireRoom
+                    ProbabilityFireMatrix[x, y] = new FireRoom
                     {
                         canFire = true,
                         isInFire = true,
@@ -102,7 +102,7 @@ public class RandomEventManager : MonoBehaviour
                 }
                 else
                 {
-                    ProbabilityFireMatrix[k, l] = new FireRoom
+                    ProbabilityFireMatrix[x, y] = new FireRoom
                     {
                         canFire = true,
                         isInFire = false,
@@ -111,8 +111,8 @@ public class RandomEventManager : MonoBehaviour
                     };
                 }
             }
-            ProbabilityFireMatrix[0, k].canFire = false;
-            ProbabilityFireMatrix[buildingController.width - 1, k].canFire = false;
+            ProbabilityFireMatrix[0, y].canFire = false;
+            ProbabilityFireMatrix[buildingController.width - 1, y].canFire = false;
         }
     }
 
