@@ -69,6 +69,7 @@ public class BuildingController : MonoBehaviour
         if(randomEventManager == null)
             randomEventManager = FindObjectOfType<RandomEventManager>();
         randomEventManager.OnFireSpawn.AddListener(ChangeRoomToFire);
+        randomEventManager.OnRoomDestroyed.AddListener(CollapseColumn);
     }
 
     private RoomType[] emptyRooms = new RoomType[] { RoomType.Pass, RoomType.LeftWall, RoomType.RightWall, RoomType.LeftDoor, RoomType.RightDoor };

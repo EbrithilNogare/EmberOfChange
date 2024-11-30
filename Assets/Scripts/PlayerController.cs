@@ -1,4 +1,5 @@
 using DG.Tweening;
+using Unity.Mathematics;
 using UnityEngine;
 using UnityEngine.Events;
 
@@ -39,10 +40,16 @@ public class PlayerController : MonoBehaviour
             newPosition = new Vector2Int(playerPosition.x + 1, playerPosition.y);
         else if (Input.GetKeyDown(KeyCode.Space))
             PushAnimal(playerPosition.x, playerPosition.y);
+        else
+            return; // no action
 
         if (CanExtinguishFire(newPosition))
+        {
+            extinguishedFireThisTurn = true;
             ExtinguishFire(newPosition);
-        else if (!extinguishedFireThisTurn && IsValidMove(newPosition))
+        }
+
+        if (!extinguishedFireThisTurn && IsValidMove(newPosition))
             SetPlayerPosition(newPosition);
     }
 
@@ -85,8 +92,9 @@ public class PlayerController : MonoBehaviour
             buildingController.map[newPosition.x, newPosition.y].innerGameObject.SetActive(false);
         }
 
+        bool movingUpOrDown = math.abs(newPosition.y - playerPosition.y) > .1f;
         playerPosition = newPosition;
-        transform.DOMove(new Vector3(playerPosition.x * stepSize.x, playerPosition.y * stepSize.y, 0), 0.5f, false);
+        transform.DOMove(new Vector3(playerPosition.x * stepSize.x, playerPosition.y * stepSize.y, 0), 0.4f, false).SetEase(Ease.OutCubic);
     }
 
     bool IsValidMove(Vector2Int newPosition)
