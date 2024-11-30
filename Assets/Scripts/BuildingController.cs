@@ -66,30 +66,70 @@ public class BuildingController : MonoBehaviour
     {
         for (int y = 0; y < height; y++)
         {
+            // Fill middle part
+            for (int x = 2; x < width - 2; x++)
+            {
+                var typeOfRoom = RoomType.Pass;
+                switch (Random.Range(0, 6))
+                {
+                    case 0: typeOfRoom = RoomType.Pass; break;
+                    case 1: typeOfRoom = RoomType.Pass; break;
+                    case 2: typeOfRoom = RoomType.LeftWall; break;
+                    case 3: typeOfRoom = RoomType.RightWall; break;
+                    case 4: typeOfRoom = RoomType.Stairs; break;
+                    case 5: typeOfRoom = RoomType.LeftDoor; break;
+                    case 6: typeOfRoom = RoomType.RightDoor; break;
+                }
+
+                map[x, y] = new Room
+                {
+                    type = typeOfRoom,
+                    onFire = false,
+                    withHuman = false,
+                    containsFireExtinguisher = false,
+                };
+            }
+
+            // Stairs
+            map[0, y] = new Room
+            {
+                type = RoomType.outsideStairs,
+                onFire = false,
+                withHuman = false,
+                containsFireExtinguisher = false,
+            };
+
+            map[width - 1, y] = new Room
+            {
+                type = RoomType.outsideStairs,
+                onFire = false,
+                withHuman = false,
+                containsFireExtinguisher = false,
+            };
+
+            // Doors
+            map[1, y] = new Room
+            {
+                type = RoomType.LeftWall,
+                onFire = false,
+                withHuman = false,
+                containsFireExtinguisher = false,
+            };
+
+            map[width - 2, y] = new Room
+            {
+                type = RoomType.RightWall,
+                onFire = false,
+                withHuman = false,
+                containsFireExtinguisher = false,
+            };
+        }
+
+        // Randomly place stairs within inner columns for connectivity (optional)
+        for (int y = 0; y < height - 1; y++)
+        {
             int stairsPlaced = 0;
-            for (int x = 1; x < width - 1; x++)
-            {
-                map[x, y] = new Room
-                {
-                    type = RoomType.Pass,
-                    onFire = false,
-                    withHuman = false,
-                    containsFireExtinguisher = false,
-                };
-            }
-
-            for (int x = 0; x < width; x += width - 1)
-            {
-                map[x, y] = new Room
-                {
-                    type = RoomType.outsideStairs,
-                    onFire = false,
-                    withHuman = false,
-                    containsFireExtinguisher = false,
-                };
-            }
-
-            while (stairsPlaced < 2 && y != height - 1)
+            while (stairsPlaced < 2)
             {
                 int stairX = Random.Range(1, width - 1);
                 if (map[stairX, y].type != RoomType.Stairs)
@@ -104,6 +144,7 @@ public class BuildingController : MonoBehaviour
         PlaceRandomElements(peopleCount, false, true);
         PlaceFireExtinguishers();
     }
+
 
     void PlaceFireExtinguishers()
     {
