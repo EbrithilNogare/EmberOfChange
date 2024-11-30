@@ -1,17 +1,14 @@
-using System.Collections;
-using System.Collections.Generic;
 using TMPro;
-using Unity.VisualScripting.Antlr3.Runtime.Misc;
 using UnityEngine;
 
 public class UIManager : MonoBehaviour
 {
-    
+
     [SerializeField] StatsManager stats;
-    
+
     [SerializeField] TMP_Text healthText;
     [SerializeField] TMP_Text fireExtinguisherText;
-    
+
     // Start is called before the first frame update
     void Start()
     {
@@ -26,7 +23,7 @@ public class UIManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
+
     }
 
     //TODO: UI
@@ -42,7 +39,7 @@ public class UIManager : MonoBehaviour
         Debug.Log("UI: ShowDeath");
 
     }
-    
+
     //TODO: UI
     public void UpdateExtinguisher(int value)
     {
