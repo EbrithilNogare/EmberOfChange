@@ -1,4 +1,6 @@
 using UnityEngine;
+using DG.Tweening;
+using UnityEngine.Events;
 
 public class BuildingController : MonoBehaviour
 {
@@ -29,6 +31,8 @@ public class BuildingController : MonoBehaviour
 
     public RoomType[,] map;
     private GameObject[,] roomObjects;
+    
+    public UnityEvent OnRoomDestroyed;
 
     void Start()
     {
@@ -115,35 +119,40 @@ public class BuildingController : MonoBehaviour
 
     public void CollapseColumn(int column, int floor)
     {
+        map[column, floor] = RoomType.Empty;
+        Destroy(roomObjects[column, floor]);
+        roomObjects[column, floor] = null;
+        OnRoomDestroyed.Invoke();
+        
         for (int y = floor; y < height - 1; y++)
         {
             map[column, y] = map[column, y + 1];
             MoveRoomObject(column, y, column, y + 1);
         }
-        map[column, height - 1] = RoomType.Empty;
-        Destroy(roomObjects[column, height - 1]);
-        roomObjects[column, height - 1] = null;
     }
 
     public void BombColumn(int column)
     {
+        map[column, 0] = RoomType.Empty;
+        Destroy(roomObjects[column, 0]);
+        roomObjects[column, 0] = null;
+        OnRoomDestroyed.Invoke();
+        
         for (int y = 0; y < height - 1; y++)
         {
             map[column, y] = map[column, y + 1];
             MoveRoomObject(column, y, column, y + 1);
         }
-        map[column, height - 1] = RoomType.Empty;
-        Destroy(roomObjects[column, height - 1]);
-        roomObjects[column, height - 1] = null;
     }
 
     void MoveRoomObject(int oldX, int oldY, int newX, int newY)
     {
-        if (roomObjects[oldX, oldY] != null)
+        if (roomObjects[newX, newY] != null)
         {
-            roomObjects[newX, newY] = roomObjects[oldX, oldY];
-            roomObjects[oldX, oldY] = null;
-            roomObjects[newX, newY].transform.position = new Vector3(newX * roomWidth, newY * roomHeight, 0);
+            roomObjects[newX, newY].transform.DOMove(new Vector3(oldX * roomWidth, oldY * roomHeight, 0), 0.5f, false);
+            roomObjects[oldX, oldY] = roomObjects[newX, newY];
+            roomObjects[newX, newY] = null;
+            //roomObjects[newX, newY].transform.position = new Vector3(newX * roomWidth, newY * roomHeight, 0);
         }
     }
 
@@ -188,5 +197,15 @@ public class BuildingController : MonoBehaviour
             }
             Debug.Log(row);
         }
+    }
+
+    public void DebugBombRandomColumn(int column)
+    {
+        BombColumn(column);
+    }
+
+    public void DebugRemoveRandomRoom(int column)
+    {
+        CollapseColumn(column, column);
     }
 }
