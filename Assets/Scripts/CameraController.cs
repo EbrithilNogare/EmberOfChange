@@ -8,11 +8,17 @@ public class CameraController : MonoBehaviour
     public Transform target;
     public float smoothSpeed = 0.125f;
     public float verticalOffset = 2f;
+    public float initialHorizontalFOV;
 
     private void Start()
     {
         buildingController = FindObjectOfType<BuildingController>();
         buildingController.OnRoomDestroyed.AddListener(ShakeCamera);
+    }
+
+    private void Update()
+    {
+        MaintainHorizontalFOV();
     }
 
     void LateUpdate()
@@ -25,5 +31,11 @@ public class CameraController : MonoBehaviour
     void ShakeCamera()
     {
         transform.DOShakePosition(0.8f, new Vector3(0.2f, 0.2f, 0f), 10, 10f, false, true, ShakeRandomnessMode.Full);
+    }
+
+    void MaintainHorizontalFOV()
+    {
+        float newAspect = Camera.main.aspect;
+        Camera.main.fieldOfView = 2f * Mathf.Atan(Mathf.Tan(initialHorizontalFOV * Mathf.Deg2Rad * 0.5f) / newAspect) * Mathf.Rad2Deg;
     }
 }

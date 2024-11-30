@@ -1332,6 +1332,7 @@ MonoBehaviour:
   target: {fileID: 736105831}
   smoothSpeed: 0.02
   verticalOffset: 4
+  initialHorizontalFOV: 91.50811
 --- !u!1 &1855150088
 GameObject:
   m_ObjectHideFlags: 0
