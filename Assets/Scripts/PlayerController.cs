@@ -53,7 +53,7 @@ public class PlayerController : MonoBehaviour
         {
             statsManager.FindExtinguisher();
             buildingController.map[newPosition.x, newPosition.y].containsFireExtinguisher = false;
-            buildingController.map[newPosition.x, newPosition.y].fireExtinguisherGameObject.SetActive(false);
+            buildingController.map[newPosition.x, newPosition.y].innerGameObject.SetActive(false);
         }
 
         playerPosition = newPosition;

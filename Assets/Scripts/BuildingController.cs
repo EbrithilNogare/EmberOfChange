@@ -21,7 +21,7 @@ public class BuildingController : MonoBehaviour
     public struct Room
     {
         public GameObject roomGameObject;
-        public GameObject fireExtinguisherGameObject;
+        public GameObject innerGameObject;
         public bool onFire;
         public bool withHuman;
         public bool containsFireExtinguisher;
@@ -107,7 +107,7 @@ public class BuildingController : MonoBehaviour
                 !map[x, y].containsFireExtinguisher)
             {
                 map[x, y].containsFireExtinguisher = true;
-                map[x, y].fireExtinguisherGameObject = Instantiate(fireExtinguisherPrefab, new Vector3(x * roomWidth, y * roomHeight, 0), Quaternion.identity, transform);
+                map[x, y].innerGameObject = Instantiate(fireExtinguisherPrefab, new Vector3(x * roomWidth, y * roomHeight, 0), Quaternion.identity, transform);
                 placed++;
             }
         }
@@ -230,10 +230,10 @@ public class BuildingController : MonoBehaviour
 
         Destroy(map[column, floor].roomGameObject);
         map[column, floor].roomGameObject = null;
-        if (map[column, floor].fireExtinguisherGameObject != null)
+        if (map[column, floor].innerGameObject != null)
         {
-            Destroy(map[column, floor].fireExtinguisherGameObject);
-            map[column, floor].fireExtinguisherGameObject = null;
+            Destroy(map[column, floor].innerGameObject);
+            map[column, floor].innerGameObject = null;
         }
         OnRoomDestroyed.Invoke();
 
@@ -250,7 +250,7 @@ public class BuildingController : MonoBehaviour
         if (map[newX, newY].roomGameObject != null)
         {
             map[newX, newY].roomGameObject.transform.DOMove(new Vector3(oldX * roomWidth, oldY * roomHeight, 0), 0.5f, false);
-            map[newX, newY].fireExtinguisherGameObject?.transform.DOMove(new Vector3(oldX * roomWidth, oldY * roomHeight, 0), 0.5f, false);
+            map[newX, newY].innerGameObject?.transform.DOMove(new Vector3(oldX * roomWidth, oldY * roomHeight, 0), 0.5f, false);
             map[oldX, oldY] = map[newX, newY];
             map[newX, newY] = new Room();
         }
