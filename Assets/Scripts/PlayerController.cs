@@ -47,11 +47,13 @@ public class PlayerController : MonoBehaviour
             newPosition = new Vector2Int(playerPosition.x - 1, playerPosition.y);
             randomEventManager.eventComesInTurns--;
         }
-        else if (Input.GetKeyDown(KeyCode.S) || Input.GetKeyDown(KeyCode.DownArrow)){
+        else if (Input.GetKeyDown(KeyCode.S) || Input.GetKeyDown(KeyCode.DownArrow))
+        {
             newPosition = new Vector2Int(playerPosition.x, playerPosition.y - 1);
             randomEventManager.eventComesInTurns--;
         }
-        else if (Input.GetKeyDown(KeyCode.D) || Input.GetKeyDown(KeyCode.RightArrow)){
+        else if (Input.GetKeyDown(KeyCode.D) || Input.GetKeyDown(KeyCode.RightArrow))
+        {
             newPosition = new Vector2Int(playerPosition.x + 1, playerPosition.y);
             randomEventManager.eventComesInTurns--;
         }
@@ -200,7 +202,7 @@ public class PlayerController : MonoBehaviour
         Camera.main.GetComponent<CameraController>().smoothSpeed = .5f;
 
         Sequence fallSequence = DOTween.Sequence();
-        fallSequence.Append(transform.DOMove(transform.position + new Vector3(0, 0.2f, fallTarget.z), .4f).SetEase(Ease.Linear));
+        fallSequence.Append(transform.DOMove(transform.position + new Vector3(0, 0.8f, fallTarget.z), .4f).SetEase(Ease.InCubic));
         fallSequence.Append(transform.DOMove(fallTarget, duration).SetEase(Ease.OutBounce));
         fallSequence.Join(transform.DORotate(new Vector3(0, 0, 90), duration, RotateMode.Fast).SetEase(Ease.Linear));
         fallSequence.OnKill(() =>

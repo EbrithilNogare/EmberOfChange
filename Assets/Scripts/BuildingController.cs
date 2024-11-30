@@ -250,12 +250,11 @@ public class BuildingController : MonoBehaviour
     void MoveRoomObject(int oldX, int oldY, int newX, int newY)
     {
         if (map[newX, newY].roomGameObject != null)
-        {
             map[newX, newY].roomGameObject.transform.DOMove(new Vector3(oldX * roomWidth, oldY * roomHeight, 0), 0.5f, false);
-            map[newX, newY].innerGameObject?.transform.DOMove(new Vector3(oldX * roomWidth, oldY * roomHeight, 0), 0.5f, false);
-            map[oldX, oldY] = map[newX, newY];
-            map[newX, newY] = new Room();
-        }
+        if (map[newX, newY].innerGameObject != null)
+            map[newX, newY].innerGameObject.transform.DOMove(new Vector3(oldX * roomWidth, oldY * roomHeight, 0), 0.5f, false);
+        map[oldX, oldY] = map[newX, newY];
+        map[newX, newY] = new Room();
     }
 
     public void DebugBombRandomColumn(int column)
