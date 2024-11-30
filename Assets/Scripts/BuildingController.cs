@@ -70,16 +70,7 @@ public class BuildingController : MonoBehaviour
             for (int x = 2; x < width - 2; x++)
             {
                 var typeOfRoom = RoomType.Pass;
-                switch (Random.Range(0, 6))
-                {
-                    case 0: typeOfRoom = RoomType.Pass; break;
-                    case 1: typeOfRoom = RoomType.Pass; break;
-                    case 2: typeOfRoom = RoomType.LeftWall; break;
-                    case 3: typeOfRoom = RoomType.RightWall; break;
-                    case 4: typeOfRoom = RoomType.Stairs; break;
-                    case 5: typeOfRoom = RoomType.LeftDoor; break;
-                    case 6: typeOfRoom = RoomType.RightDoor; break;
-                }
+
 
                 map[x, y] = new Room
                 {
@@ -125,13 +116,13 @@ public class BuildingController : MonoBehaviour
             };
         }
 
-        // Randomly place stairs within inner columns for connectivity (optional)
+        // Randomly place stairs within inner columns for connectivity
         for (int y = 0; y < height - 1; y++)
         {
             int stairsPlaced = 0;
             while (stairsPlaced < 2)
             {
-                int stairX = Random.Range(1, width - 1);
+                int stairX = Random.Range(2, width - 2);
                 if (map[stairX, y].type != RoomType.Stairs)
                 {
                     map[stairX, y].type = RoomType.Stairs;
