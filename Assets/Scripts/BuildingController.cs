@@ -23,7 +23,7 @@ public class BuildingController : MonoBehaviour
         public GameObject roomGameObject;
         public GameObject innerGameObject;
         public bool onFire;
-        public bool withHuman;
+        public bool withAnimal;
         public bool containsFireExtinguisher;
         public RoomType type;
     }
@@ -88,33 +88,12 @@ public class BuildingController : MonoBehaviour
             map[stairX, y].type = RoomType.Stairs;
         }
 
-        PlaceRandomElements(fireCount, true, false);
-        PlaceRandomElements(peopleCount, false, true);
-        PlaceFireExtinguishers();
+        PlaceRandomElements(fireCount, true, false, false);
+        PlaceRandomElements(peopleCount, false, true, false);
+        PlaceRandomElements(fireExtinguisherCount, false, false, true);
     }
 
-    void PlaceFireExtinguishers()
-    {
-        int placed = 0;
-        int loopCount = 0;
-        while (placed < fireExtinguisherCount)
-        {
-            if (loopCount++ > 10000) throw new System.Exception("Infinite Loop");
-            int x = Random.Range(1, width - 1);
-            int y = Random.Range(1, height);
-            if (emptyRooms.Contains(map[x, y].type) &&
-                !map[x, y].onFire &&
-                !map[x, y].withHuman &&
-                !map[x, y].containsFireExtinguisher)
-            {
-                map[x, y].containsFireExtinguisher = true;
-                map[x, y].innerGameObject = Instantiate(fireExtinguisherPrefab, new Vector3(x * roomWidth, y * roomHeight, 0), Quaternion.identity, transform);
-                placed++;
-            }
-        }
-    }
-
-    void PlaceRandomElements(int count, bool fire, bool human)
+    void PlaceRandomElements(int count, bool fire, bool animal, bool containsFireExtinguisher)
     {
         int placed = 0;
         int loopCount = 0;
@@ -124,10 +103,11 @@ public class BuildingController : MonoBehaviour
 
             int x = Random.Range(1, width - 1);
             int y = Random.Range(1, height);
-            if (emptyRooms.Contains(map[x, y].type) && !map[x, y].onFire && !map[x, y].withHuman)
+            if (emptyRooms.Contains(map[x, y].type) && !map[x, y].onFire && !map[x, y].withAnimal)
             {
                 map[x, y].onFire = fire;
-                map[x, y].withHuman = human;
+                map[x, y].withAnimal = animal;
+                map[x, y].containsFireExtinguisher = containsFireExtinguisher;
                 placed++;
             }
         }
@@ -144,27 +124,27 @@ public class BuildingController : MonoBehaviour
                 if (prefab != null)
                 {
                     Vector3 position = new Vector3(x * roomWidth, y * roomHeight, 0);
-                    room.roomGameObject = Instantiate(prefab, position, Quaternion.identity, transform);
+                    map[x, y].roomGameObject = Instantiate(prefab, position, Quaternion.identity, transform);
                     map[x, y] = room;
                 }
 
                 if (room.onFire)
                 {
                     Vector3 position = new Vector3(x * roomWidth, y * roomHeight, 0);
-                    room.innerGameObject = Instantiate(firePrefab, position, Quaternion.identity, transform);
+                    map[x, y].innerGameObject = Instantiate(firePrefab, position, Quaternion.identity, transform);
                 }
 
                 if (room.containsFireExtinguisher)
                 {
                     Vector3 position = new Vector3(x * roomWidth, y * roomHeight, 0);
-                    room.innerGameObject = Instantiate(fireExtinguisherPrefab, position, Quaternion.identity, transform);
+                    map[x, y].innerGameObject = Instantiate(fireExtinguisherPrefab, position, Quaternion.identity, transform);
                 }
 
-                if (room.withHuman)
+                if (room.withAnimal)
                 {
                     int randomAnimalIndex = Random.Range(0, animalsPrefab.Length);
                     Vector3 position = new Vector3(x * roomWidth, y * roomHeight, 0);
-                    room.innerGameObject = Instantiate(animalsPrefab[randomAnimalIndex], position, Quaternion.identity, transform);
+                    map[x, y].innerGameObject = Instantiate(animalsPrefab[randomAnimalIndex], position, Quaternion.identity, transform);
                 }
             }
         }
@@ -187,11 +167,7 @@ public class BuildingController : MonoBehaviour
 
     public void ChangeRoomToFire(int x, int y)
     {
-        if (!map[x, y].onFire)
-        {
-            map[x, y].onFire = true;
-            UpdateRoom(x, y);
-        }
+        throw new System.NotImplementedException();
     }
 
     public void ExtinguishFire(int x, int y)
@@ -199,6 +175,14 @@ public class BuildingController : MonoBehaviour
         if (map[x, y].onFire && (IsAdjacentToStairs(x, y) || IsOnSameFloor(x, y)))
         {
             map[x, y].onFire = false;
+
+            Debug.Log("Extinguishing Fire");
+            if (map[x, y].innerGameObject != null)
+            {
+                Destroy(map[x, y].innerGameObject);
+                fireExtinguisherCount--;
+            }
+
             UpdateRoom(x, y);
         }
     }
@@ -241,10 +225,9 @@ public class BuildingController : MonoBehaviour
 
     public void CollapseColumn(int column, int floor)
     {
-
         map[column, floor].type = RoomType.Empty;
         map[column, floor].onFire = false;
-        map[column, floor].withHuman = false;
+        map[column, floor].withAnimal = false;
 
         Destroy(map[column, floor].roomGameObject);
         map[column, floor].roomGameObject = null;
@@ -260,7 +243,6 @@ public class BuildingController : MonoBehaviour
             map[column, y] = map[column, y + 1];
             MoveRoomObject(column, y, column, y + 1);
         }
-
     }
 
     void MoveRoomObject(int oldX, int oldY, int newX, int newY)
