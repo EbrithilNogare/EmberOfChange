@@ -167,9 +167,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   width: 8
-  height: 5
-  fireCount: 7
-  peopleCount: 5
+  height: 20
+  fireCount: 23
+  peopleCount: 10
   roomPrefab: {fileID: 8994669005690676939, guid: 3b92c5d02f6fd674d9d09d1fd791bbe9, type: 3}
   stairsPrefab: {fileID: 8994669005690676939, guid: 0df5bb7c9add57d4ead8af478b29c829, type: 3}
   roomOnFirePrefab: {fileID: 8994669005690676939, guid: 7c5bf5a639c98554180210dc21717e1c, type: 3}
@@ -855,6 +855,7 @@ GameObject:
   - component: {fileID: 1605991831}
   - component: {fileID: 1605991830}
   - component: {fileID: 1605991833}
+  - component: {fileID: 1605991834}
   m_Layer: 0
   m_Name: Main Camera
   m_TagString: MainCamera
@@ -980,6 +981,21 @@ MonoBehaviour:
     m_MipBias: 0
     m_VarianceClampScale: 0.9
     m_ContrastAdaptiveSharpening: 0
+--- !u!114 &1605991834
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1605991829}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ab7e3a45590049e4f9a9f61cbc02bef5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  player: {fileID: 736105831}
+  smoothSpeed: 0.01
+  verticalOffset: 5
 --- !u!1 &1879512142
 GameObject:
   m_ObjectHideFlags: 0
