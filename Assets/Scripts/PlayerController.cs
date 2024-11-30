@@ -16,7 +16,7 @@ public class PlayerController : MonoBehaviour
     void Start()
     {
         statsManager = FindObjectOfType<StatsManager>();
-        SetPlayerPosition(playerPosition);
+        transform.position = new Vector3(playerPosition.x * stepSize.x, playerPosition.y * stepSize.y, 0);
     }
 
     void Update()
