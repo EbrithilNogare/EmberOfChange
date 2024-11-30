@@ -1,5 +1,4 @@
 using System;
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
@@ -14,30 +13,30 @@ public class RandomEventManager : MonoBehaviour
         public float FireProbability;
         public int FireTickToDestoyed;
     }
-    
+
     [SerializeField] BuildingController buildingController;
     [Header("------EVENT TICKS------")]
     [SerializeField] public int eventComesInTurns;
     [SerializeField] private int eventComesInTurnsMax;
     [SerializeField] private int eventComesInTurnsMin;
-    
+
     [Header("------NUMBER OF FIRES TO GROW------")]
     [SerializeField] private int spawnNewNumberOfFires;
     [SerializeField] private int spawnNewNumberOfFiresMax;
     [SerializeField] private int spawnNewNumberOfFiresMin;
-    
+
     [Header("------FIRE TO BE DESTROY TICKS------")]
     [SerializeField] public int fireTicks;
-    
+
     [Header("------PIGEON SHIT------")]
     [SerializeField] public int ticksToPigeonShit;
     [SerializeField] public int ticksToPigeonShitMax;
     [SerializeField] public int ticksToPigeonShitMin;
-    
+
     [Header("------CONST------")]
     [SerializeField] public bool sequentialEvents = false;
     [SerializeField] public float probabilityOfNeighbourFire;
-    
+
     [Header("------EVENTS------")]
     public UnityEvent OnPigeonFired;
     public UnityEvent OnPigeonShit;
@@ -47,7 +46,7 @@ public class RandomEventManager : MonoBehaviour
     public FireRoom[,] ProbabilityFireMatrix;
 
 
-    [Header("------DEBUG------")] 
+    [Header("------DEBUG------")]
     public bool tick = false;
 
     public bool start = true;
@@ -60,7 +59,7 @@ public class RandomEventManager : MonoBehaviour
             buildingController = FindObjectOfType<BuildingController>();
         }
         ProbabilityFireMatrix = new FireRoom[buildingController.width, buildingController.height];
-        
+
         eventComesInTurns = Random.Range(eventComesInTurnsMin, eventComesInTurnsMax);
     }
 
@@ -77,7 +76,7 @@ public class RandomEventManager : MonoBehaviour
             tick = false;
             ComputeFireMatrix();
             EvaluateFireMatrix();
-            
+
         }
     }
 
@@ -99,7 +98,7 @@ public class RandomEventManager : MonoBehaviour
                         FireProbability = 1f,
                         FireTickToDestoyed = fireTicks
                     };
-                    
+
                 }
                 else
                 {
@@ -123,7 +122,7 @@ public class RandomEventManager : MonoBehaviour
         {
             for (int l = 0; l < ProbabilityFireMatrix.GetLength(1); l++)
             {
-                if (ProbabilityFireMatrix[k,l].isInFire)
+                if (ProbabilityFireMatrix[k, l].isInFire)
                 {
                     if (ProbabilityFireMatrix[k, l].FireTickToDestoyed == 0)
                     {
@@ -132,7 +131,7 @@ public class RandomEventManager : MonoBehaviour
                     }
                     else
                     {
-                        ProbabilityFireMatrix[k,l].FireTickToDestoyed--;
+                        ProbabilityFireMatrix[k, l].FireTickToDestoyed--;
                     }
                 }
             }
@@ -142,7 +141,7 @@ public class RandomEventManager : MonoBehaviour
     private void ColumnUpdate(int col, int row)
     {
         //ProbabilityFireMatrix[col, row].isInFire = false;
-        
+
         //OnRoomDestroyed.Invoke();
 
         for (int y = row; y < buildingController.height - 1; y++)
@@ -150,52 +149,52 @@ public class RandomEventManager : MonoBehaviour
             ProbabilityFireMatrix[col, y] = ProbabilityFireMatrix[col, y + 1];
             //MoveRoomObject(column, y, column, y + 1);
         }
-        
+
     }
 
     void ComputeFireMatrix()
     {
         spawnNewNumberOfFires = Random.Range(spawnNewNumberOfFiresMin, spawnNewNumberOfFiresMax);
         List<Tuple<int, int>> fires = new List<Tuple<int, int>>();
-        
-        
+
+
         for (int k = 0; k < ProbabilityFireMatrix.GetLength(0); k++)
         {
             for (int l = 0; l < ProbabilityFireMatrix.GetLength(1); l++)
             {
-                if (ProbabilityFireMatrix[k,l].isInFire)
+                if (ProbabilityFireMatrix[k, l].isInFire)
                 {
                     //fires.Add(new Tuple<int, int>(k, l));
-                    
+
                     if (k != 0 &&
                         ProbabilityFireMatrix[k - 1, l].canFire &&
                         !ProbabilityFireMatrix[k - 1, l].isInFire)
                     {
                         ProbabilityFireMatrix[k - 1, l].FireProbability += probabilityOfNeighbourFire;
-                        fires.Add(new Tuple<int, int>(k - 1,l));
+                        fires.Add(new Tuple<int, int>(k - 1, l));
                     }
                     if (k != ProbabilityFireMatrix.GetLength(0) - 1 &&
                         ProbabilityFireMatrix[k + 1, l].canFire &&
-                        !ProbabilityFireMatrix[k + 1,l].isInFire)
+                        !ProbabilityFireMatrix[k + 1, l].isInFire)
                     {
                         ProbabilityFireMatrix[k + 1, l].FireProbability += probabilityOfNeighbourFire;
-                        fires.Add(new Tuple<int, int>(k + 1,l));
+                        fires.Add(new Tuple<int, int>(k + 1, l));
                     }
                     if (l != 0 &&
                         ProbabilityFireMatrix[k, l - 1].canFire &&
                         !ProbabilityFireMatrix[k, l - 1].isInFire)
                     {
                         ProbabilityFireMatrix[k, l - 1].FireProbability += probabilityOfNeighbourFire;
-                        fires.Add(new Tuple<int, int>(k,l-1));
+                        fires.Add(new Tuple<int, int>(k, l - 1));
                     }
                     if (l != ProbabilityFireMatrix.GetLength(1) - 1 &&
                         ProbabilityFireMatrix[k, l + 1].canFire &&
-                        !ProbabilityFireMatrix[k,l+1].isInFire)
+                        !ProbabilityFireMatrix[k, l + 1].isInFire)
                     {
                         ProbabilityFireMatrix[k, l + 1].FireProbability += probabilityOfNeighbourFire;
-                        fires.Add(new Tuple<int, int>(k,l+1));
+                        fires.Add(new Tuple<int, int>(k, l + 1));
                     }
-                    
+
                 }
             }
         }
@@ -204,17 +203,17 @@ public class RandomEventManager : MonoBehaviour
         {
             spawnNewNumberOfFires = fires.Count;
         }
-        
+
         Debug.Log("TO BE SPAWNED: " + spawnNewNumberOfFires);
         for (int i = 0; i < spawnNewNumberOfFires; i++)
         {
             var rnd = Random.Range(0, fires.Count);
             Tuple<int, int> finalFire = new Tuple<int, int>(fires[rnd].Item1, fires[rnd].Item2);
             //float mostProbability = 0;
-            
+
             //var k = fires[rnd].Item1;
             //var l = fires[rnd].Item2;
-            
+
             // if (k != 0 && 
             //     ProbabilityFireMatrix[k - 1, l].canFire && 
             //     !ProbabilityFireMatrix[k - 1, l].isInFire && 
@@ -249,8 +248,8 @@ public class RandomEventManager : MonoBehaviour
             ProbabilityFireMatrix[finalFire.Item1, finalFire.Item2].FireProbability = 1;
             OnFireSpawn.Invoke(finalFire.Item1, finalFire.Item2);
             fires.RemoveAt(rnd);
-            Debug.Log("Fire Spawned: X " + finalFire.Item1 + " Y " + finalFire.Item2); ; 
-            
+            Debug.Log("Fire Spawned: X " + finalFire.Item1 + " Y " + finalFire.Item2); ;
+
         }
 
         // for (int k = 0; k < ProbabilityFireMatrix.GetLength(0); k++)
@@ -271,5 +270,5 @@ public class RandomEventManager : MonoBehaviour
         //     }
         // }
     }
-    
+
 }
