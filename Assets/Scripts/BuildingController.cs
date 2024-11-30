@@ -74,7 +74,7 @@ public class BuildingController : MonoBehaviour
         {
             for (int x = 2; x < width - 2; x++)
             {
-                map[x, y] = new Room { type = Random.Range(0, 2) == 0 ? RoomType.PassWithDoors : RoomType.Pass };
+                map[x, y] = new Room { type = Random.Range(0, 4) == 0 ? RoomType.PassWithDoors : RoomType.Pass };
             }
 
             int randomX = Random.Range(2, width - 3);
@@ -182,29 +182,14 @@ public class BuildingController : MonoBehaviour
         {
             map[roomX, roomY].onFire = false;
 
-            Debug.Log("Extinguishing Fire");
             if (map[roomX, roomY].innerGameObject != null)
             {
                 Destroy(map[roomX, roomY].innerGameObject);
                 fireExtinguisherCount--;
             }
-
-            UpdateRoom(roomX, roomY);
         }
     }
 
-    void UpdateRoom(int x, int y)
-    {
-        if (map[x, y].roomGameObject != null)
-            Destroy(map[x, y].roomGameObject);
-
-        GameObject prefab = GetPrefabForRoom(map[x, y]);
-        if (prefab != null)
-        {
-            Vector3 position = new Vector3(x * roomWidth, y * roomHeight, 0);
-            map[x, y].roomGameObject = Instantiate(prefab, position, Quaternion.identity, transform);
-        }
-    }
     bool CheckFireOnReach(int roomX, int roomY, int playerX, int playerY)
     {
         bool isPlayerDirectlyLeft = playerX == roomX - 1 && playerY == roomY;
@@ -214,9 +199,9 @@ public class BuildingController : MonoBehaviour
         return isPlayerDirectlyLeft || isPlayerDirectlyRight || isPlayerBelowFireOnStairs;
     }
 
-    public void BombColumn(int column)
+    public void BombColumn(int column, int floor)
     {
-        CollapseColumn(column, 0);
+        CollapseColumn(column, floor);
     }
 
     public void CollapseColumn(int column, int floor)
@@ -254,7 +239,7 @@ public class BuildingController : MonoBehaviour
 
     public void DebugBombRandomColumn(int column)
     {
-        BombColumn(column);
+        BombColumn(column, 0);
     }
 
     public void DebugRemoveRandomRoom(int column)

@@ -80,8 +80,15 @@ public class PlayerController : MonoBehaviour
         if (newRoom.onFire) // fire check
             return false;
 
+        if (newPosition.x > playerPosition.x && (oldRoom.type == BuildingController.RoomType.RightWall || newRoom.type == BuildingController.RoomType.LeftWall)) // right movement
+            return false;
+
+        if (newPosition.x < playerPosition.x && (oldRoom.type == BuildingController.RoomType.LeftWall || newRoom.type == BuildingController.RoomType.RightWall)) // left movement
+            return false;
+
         return true;
     }
+
 
     bool CanExtinguishFire(Vector2Int position)
     {
@@ -106,8 +113,15 @@ public class PlayerController : MonoBehaviour
         if (position.y < playerPosition.y && newRoom.type != BuildingController.RoomType.Stairs && oldRoom.type != BuildingController.RoomType.outsideStairs) // stairs down
             return false;
 
+        if (position.x > playerPosition.x && (oldRoom.type == BuildingController.RoomType.RightWall || newRoom.type == BuildingController.RoomType.LeftWall)) // fire to the right blocked by wall
+            return false;
+
+        if (position.x < playerPosition.x && (oldRoom.type == BuildingController.RoomType.LeftWall || newRoom.type == BuildingController.RoomType.RightWall)) // fire to the left blocked by wall
+            return false;
+
         return true;
     }
+
 
     void ExtinguishFire(Vector2Int position)
     {
