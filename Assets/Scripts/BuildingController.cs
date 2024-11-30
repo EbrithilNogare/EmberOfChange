@@ -58,12 +58,17 @@ public class BuildingController : MonoBehaviour
 
     public Room[,] map;
     public UnityEvent OnRoomDestroyed;
+    
+    public RandomEventManager randomEventManager;
 
     void Start()
     {
         map = new Room[width, height];
         GenerateMap();
         InstantiateRooms();
+        if(randomEventManager == null)
+            randomEventManager = FindObjectOfType<RandomEventManager>();
+        randomEventManager.OnFireSpawn.AddListener(ChangeRoomToFire);
     }
 
     private RoomType[] emptyRooms = new RoomType[] { RoomType.Pass, RoomType.LeftWall, RoomType.RightWall, RoomType.LeftDoor, RoomType.RightDoor };
@@ -172,7 +177,11 @@ public class BuildingController : MonoBehaviour
 
     public void ChangeRoomToFire(int x, int y)
     {
-        throw new System.NotImplementedException();
+        if (map[x, y].onFire) return;
+        
+        map[x,y].onFire = true;
+        Vector3 position = new Vector3(x * roomWidth, y * roomHeight, 0);
+        map[x, y].innerGameObject = Instantiate(firePrefab, position, Quaternion.identity, transform);
     }
 
     public void ExtinguishFire(int roomX, int roomY, int playerX, int playerY)
