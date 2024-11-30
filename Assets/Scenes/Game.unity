@@ -895,7 +895,7 @@ Canvas:
   m_OverrideSorting: 0
   m_OverridePixelPerfect: 0
   m_SortingBucketNormalizedSize: 0
-  m_VertexColorAlwaysGammaSpace: 0
+  m_VertexColorAlwaysGammaSpace: 1
   m_AdditionalShaderChannelsFlag: 25
   m_UpdateRectTransformForStandalone: 0
   m_SortingLayerID: 0
@@ -1236,8 +1236,8 @@ Camera:
     y: 0
     width: 1
     height: 1
-  near clip plane: 0.3
-  far clip plane: 1000
+  near clip plane: 0.5
+  far clip plane: 100
   field of view: 60.000004
   orthographic: 0
   orthographic size: 6
@@ -1524,13 +1524,13 @@ Light:
   m_InnerSpotAngle: 21.80208
   m_CookieSize: 10
   m_Shadows:
-    m_Type: 0
+    m_Type: 2
     m_Resolution: -1
     m_CustomResolution: -1
-    m_Strength: 1
+    m_Strength: 0.3
     m_Bias: 0.05
     m_NormalBias: 0.4
-    m_NearPlane: 0.2
+    m_NearPlane: 1.92
     m_CullingMatrixOverride:
       e00: 1
       e01: 0
@@ -1576,13 +1576,13 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1879512142}
   serializedVersion: 2
-  m_LocalRotation: {x: 0.10501725, y: 0.14859496, z: -0.015872031, w: 0.983178}
+  m_LocalRotation: {x: 0.13210629, y: 0.17906247, z: -0.017449625, w: 0.97477186}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_LocalEulerAnglesHint: {x: 12.194, y: 17.189, z: 0}
+  m_LocalEulerAnglesHint: {x: 15.295, y: 20.924, z: 0.79}
 --- !u!1001 &3621920388986903188
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1591,22 +1591,6 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 2548272981117986925, guid: 74f0e5278ce00c54f939628f671ff284, type: 3}
-      propertyPath: animalsPrefab.Array.size
-      value: 4
-      objectReference: {fileID: 0}
-    - target: {fileID: 2548272981117986925, guid: 74f0e5278ce00c54f939628f671ff284, type: 3}
-      propertyPath: animalsPrefab.Array.data[1]
-      value: 
-      objectReference: {fileID: 8997349515218818118, guid: 2035148fe3384b44ca0f05b6840d1801, type: 3}
-    - target: {fileID: 2548272981117986925, guid: 74f0e5278ce00c54f939628f671ff284, type: 3}
-      propertyPath: animalsPrefab.Array.data[2]
-      value: 
-      objectReference: {fileID: 8997349515218818118, guid: 5a86fdaf1e6463b4294794f916dd19f5, type: 3}
-    - target: {fileID: 2548272981117986925, guid: 74f0e5278ce00c54f939628f671ff284, type: 3}
-      propertyPath: animalsPrefab.Array.data[3]
-      value: 
-      objectReference: {fileID: 8997349515218818118, guid: 597ca960258787a4c935b0133e40a0c6, type: 3}
     - target: {fileID: 5238924268303452095, guid: 74f0e5278ce00c54f939628f671ff284, type: 3}
       propertyPath: m_Name
       value: Building

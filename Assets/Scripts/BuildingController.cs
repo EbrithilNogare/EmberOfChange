@@ -9,6 +9,7 @@ public class BuildingController : MonoBehaviour
     {
         Empty,
         Pass,
+        PassWithDoors,
         Stairs,
         LeftWall,
         RightWall,
@@ -38,6 +39,7 @@ public class BuildingController : MonoBehaviour
     [Header("Prefab Room References")]
 
     public GameObject passPrefab;
+    public GameObject passWithDoorsPrefab;
     public GameObject stairsPrefab;
     public GameObject leftWallPrefab;
     public GameObject rightWallPrefab;
@@ -72,14 +74,17 @@ public class BuildingController : MonoBehaviour
         {
             for (int x = 2; x < width - 2; x++)
             {
-                var typeOfRoom = emptyRooms[Random.Range(0, emptyRooms.Length - 1)];
-                map[x, y] = new Room { type = typeOfRoom };
+                map[x, y] = new Room { type = Random.Range(0, 2) == 0 ? RoomType.PassWithDoors : RoomType.Pass };
             }
+
+            int randomX = Random.Range(2, width - 3);
+            map[randomX, y] = new Room { type = Random.Range(0, 1) == 0 ? RoomType.LeftWall : RoomType.RightWall };
+
 
             map[0, y] = new Room { type = RoomType.outsideStairs };
             map[width - 1, y] = new Room { type = RoomType.outsideStairs };
-            map[1, y] = new Room { type = RoomType.LeftWall };
-            map[width - 2, y] = new Room { type = RoomType.RightWall };
+            map[1, y] = new Room { type = RoomType.LeftDoor };
+            map[width - 2, y] = new Room { type = RoomType.RightDoor };
         }
 
         for (int y = 0; y < height - 1; y++)
@@ -161,6 +166,7 @@ public class BuildingController : MonoBehaviour
             RoomType.LeftDoor => leftDoorPrefab,
             RoomType.RightDoor => rightDoorPrefab,
             RoomType.outsideStairs => outsideStairsPrefab,
+            RoomType.PassWithDoors => passWithDoorsPrefab,
             _ => null,
         };
     }

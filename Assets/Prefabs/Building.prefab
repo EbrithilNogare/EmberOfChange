@@ -50,6 +50,7 @@ MonoBehaviour:
   fireCount: 23
   peopleCount: 10
   passPrefab: {fileID: 8994669005690676939, guid: 3b92c5d02f6fd674d9d09d1fd791bbe9, type: 3}
+  passWithDoorsPrefab: {fileID: 8994669005690676939, guid: e5ee5d27d26794a47ae87cc304bc5314, type: 3}
   stairsPrefab: {fileID: 8994669005690676939, guid: 0df5bb7c9add57d4ead8af478b29c829, type: 3}
   leftWallPrefab: {fileID: 8994669005690676939, guid: 8b7cbcd67a7fff7459baf3d14904383e, type: 3}
   rightWallPrefab: {fileID: 8994669005690676939, guid: daaa5174a38fbeb4bab180800614310b, type: 3}
@@ -60,6 +61,9 @@ MonoBehaviour:
   firePrefab: {fileID: 8997349515218818118, guid: f7f712f0cc257bb4ca904f5263ba356a, type: 3}
   animalsPrefab:
   - {fileID: 8997349515218818118, guid: b37d6762f1582074e80ce740b5dbf95b, type: 3}
+  - {fileID: 8997349515218818118, guid: 2035148fe3384b44ca0f05b6840d1801, type: 3}
+  - {fileID: 8997349515218818118, guid: 5a86fdaf1e6463b4294794f916dd19f5, type: 3}
+  - {fileID: 8997349515218818118, guid: 597ca960258787a4c935b0133e40a0c6, type: 3}
   roomWidth: 3
   roomHeight: 3
   OnRoomDestroyed:
