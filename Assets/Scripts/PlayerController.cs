@@ -1,5 +1,6 @@
 using UnityEngine;
 using static BuildingController;
+using DG.Tweening;
 
 public class PlayerController : MonoBehaviour
 {
@@ -27,19 +28,19 @@ public class PlayerController : MonoBehaviour
         Vector2Int newPosition = playerPosition;
         extinguishedFireThisTurn = false;
 
-        if (Input.GetKeyDown(KeyCode.W))
+        if (Input.GetKeyDown(KeyCode.W) || Input.GetKeyDown(KeyCode.UpArrow))
         {
             newPosition = new Vector2Int(playerPosition.x, playerPosition.y + 1);
         }
-        else if (Input.GetKeyDown(KeyCode.A))
+        else if (Input.GetKeyDown(KeyCode.A) || Input.GetKeyDown(KeyCode.LeftArrow))
         {
             newPosition = new Vector2Int(playerPosition.x - 1, playerPosition.y);
         }
-        else if (Input.GetKeyDown(KeyCode.S))
+        else if (Input.GetKeyDown(KeyCode.S) || Input.GetKeyDown(KeyCode.DownArrow))
         {
             newPosition = new Vector2Int(playerPosition.x, playerPosition.y - 1);
         }
-        else if (Input.GetKeyDown(KeyCode.D))
+        else if (Input.GetKeyDown(KeyCode.D) || Input.GetKeyDown(KeyCode.RightArrow))
         {
             newPosition = new Vector2Int(playerPosition.x + 1, playerPosition.y);
         }
@@ -51,7 +52,8 @@ public class PlayerController : MonoBehaviour
         else if (!extinguishedFireThisTurn && IsValidMove(newPosition, playerPosition))
         {
             playerPosition = newPosition;
-            transform.position = new Vector3(playerPosition.x * stepSize.x, playerPosition.y * stepSize.y, 0);
+            transform.DOMove(new Vector3(playerPosition.x * stepSize.x, playerPosition.y * stepSize.y, 0), 0.5f, false);
+            //transform.position = new Vector3(playerPosition.x * stepSize.x, playerPosition.y * stepSize.y, 0);
         }
     }
 
