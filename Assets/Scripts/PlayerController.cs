@@ -1,6 +1,5 @@
-using UnityEngine;
-using static BuildingController;
 using DG.Tweening;
+using UnityEngine;
 
 public class PlayerController : MonoBehaviour
 {
@@ -14,8 +13,7 @@ public class PlayerController : MonoBehaviour
     void Start()
     {
         statsManager = FindObjectOfType<StatsManager>();
-
-        transform.position = new Vector3(playerPosition.x * stepSize.x, playerPosition.y * stepSize.y, 0);
+        SetPlayerPosition(playerPosition);
     }
 
     void Update()
@@ -29,52 +27,47 @@ public class PlayerController : MonoBehaviour
         extinguishedFireThisTurn = false;
 
         if (Input.GetKeyDown(KeyCode.W) || Input.GetKeyDown(KeyCode.UpArrow))
-        {
             newPosition = new Vector2Int(playerPosition.x, playerPosition.y + 1);
-        }
         else if (Input.GetKeyDown(KeyCode.A) || Input.GetKeyDown(KeyCode.LeftArrow))
-        {
             newPosition = new Vector2Int(playerPosition.x - 1, playerPosition.y);
-        }
         else if (Input.GetKeyDown(KeyCode.S) || Input.GetKeyDown(KeyCode.DownArrow))
-        {
             newPosition = new Vector2Int(playerPosition.x, playerPosition.y - 1);
-        }
         else if (Input.GetKeyDown(KeyCode.D) || Input.GetKeyDown(KeyCode.RightArrow))
-        {
             newPosition = new Vector2Int(playerPosition.x + 1, playerPosition.y);
-        }
 
         if (CanExtinguishFire(newPosition))
-        {
             ExtinguishFire(newPosition);
-        }
-        else if (!extinguishedFireThisTurn && IsValidMove(newPosition, playerPosition))
-        {
-            playerPosition = newPosition;
-            transform.DOMove(new Vector3(playerPosition.x * stepSize.x, playerPosition.y * stepSize.y, 0), 0.5f, false);
-            //transform.position = new Vector3(playerPosition.x * stepSize.x, playerPosition.y * stepSize.y, 0);
-        }
+        else if (!extinguishedFireThisTurn && IsValidMove(newPosition))
+            SetPlayerPosition(newPosition);
     }
 
-    bool IsValidMove(Vector2Int newPosition, Vector2Int oldPosition)
+    void SetPlayerPosition(Vector2Int newPosition)
+    {
+        playerPosition = newPosition;
+        transform.DOMove(new Vector3(playerPosition.x * stepSize.x, playerPosition.y * stepSize.y, 0), 0.5f, false);
+    }
+
+    bool IsValidMove(Vector2Int newPosition)
     {
         if (newPosition.x < 0 || newPosition.y < 0 || newPosition.x >= buildingController.map.GetLength(0) || newPosition.y >= buildingController.map.GetLength(1))
             return false;
 
-        RoomType oldRoom = buildingController.map[oldPosition.x, oldPosition.y];
-        RoomType newRoom = buildingController.map[newPosition.x, newPosition.y];
+        var oldRoom = buildingController.map[playerPosition.x, playerPosition.y];
+        var newRoom = buildingController.map[newPosition.x, newPosition.y];
 
-        if ((oldPosition - newPosition).y < 0 && oldRoom != RoomType.Stairs)
+        if (newRoom.type == BuildingController.RoomType.Empty)
             return false;
 
-        if ((oldPosition - newPosition).y > 0 && newRoom != RoomType.Stairs)
+        if (newPosition.y > playerPosition.y && oldRoom.type != BuildingController.RoomType.Stairs) // stairs up
             return false;
 
-        if (newRoom == RoomType.Stairs || newRoom == RoomType.Room || newRoom == RoomType.RoomWithPerson)
-            return true;
+        if (newPosition.y < playerPosition.y && newRoom.type != BuildingController.RoomType.Stairs) // stairs down
+            return false;
 
-        return false;
+        if (newRoom.onFire) // fire check
+            return false;
+
+        return true;
     }
 
     bool CanExtinguishFire(Vector2Int position)
@@ -82,12 +75,22 @@ public class PlayerController : MonoBehaviour
         if (statsManager.fireExtinguisher <= 0)
             return false;
 
-        if (position.x >= 0 && position.y >= 0 && position.x < buildingController.map.GetLength(0) && position.y < buildingController.map.GetLength(1))
-        {
-            return buildingController.map[position.x, position.y] == RoomType.Fire;
-        }
+        var oldRoom = buildingController.map[playerPosition.x, playerPosition.y];
+        var newRoom = buildingController.map[position.x, position.y];
 
-        return false;
+        if (newRoom.type == BuildingController.RoomType.Empty)
+            return false;
+
+        if (!newRoom.onFire)
+            return false;
+
+        if (position.y > playerPosition.y && oldRoom.type != BuildingController.RoomType.Stairs) // stairs up
+            return false;
+
+        if (position.y < playerPosition.y && newRoom.type != BuildingController.RoomType.Stairs) // stairs down
+            return false;
+
+        return true;
     }
 
     void ExtinguishFire(Vector2Int position)
@@ -95,7 +98,7 @@ public class PlayerController : MonoBehaviour
         if (statsManager.fireExtinguisher > 0)
         {
             statsManager.UseExtinguisher();
-            buildingController.ChangeRoomToNotFire(position.x, position.y);
+            buildingController.ExtinguishFire(position.x, position.y);
             extinguishedFireThisTurn = true;
         }
     }
