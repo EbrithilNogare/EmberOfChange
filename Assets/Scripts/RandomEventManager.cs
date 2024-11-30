@@ -134,6 +134,11 @@ public class RandomEventManager : MonoBehaviour
                     ProbabilityFireMatrix[k, l].isInFire = false;
                 }
                 
+                if (!buildingController.map[k, l].onFire)
+                {
+                    ProbabilityFireMatrix[k, l].isInFire = false;
+                }
+                
                 if (ProbabilityFireMatrix[k, l].isInFire)
                 {
                     if (ProbabilityFireMatrix[k, l].FireTickToDestoyed == 0)
@@ -174,6 +179,11 @@ public class RandomEventManager : MonoBehaviour
         {
             for (int l = 0; l < ProbabilityFireMatrix.GetLength(1); l++)
             {
+                if (!buildingController.map[k, l].onFire)
+                {
+                    ProbabilityFireMatrix[k, l].isInFire = false;
+                }
+                
                 if (ProbabilityFireMatrix[k, l].isInFire)
                 {
                     //fires.Add(new Tuple<int, int>(k, l));
