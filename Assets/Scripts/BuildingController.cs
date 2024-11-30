@@ -58,7 +58,7 @@ public class BuildingController : MonoBehaviour
 
     public Room[,] map;
     public UnityEvent OnRoomDestroyed;
-    
+
     public RandomEventManager randomEventManager;
 
     void Start()
@@ -66,7 +66,7 @@ public class BuildingController : MonoBehaviour
         map = new Room[width, height];
         GenerateMap();
         InstantiateRooms();
-        if(randomEventManager == null)
+        if (randomEventManager == null)
             randomEventManager = FindObjectOfType<RandomEventManager>();
         randomEventManager.OnFireSpawn.AddListener(ChangeRoomToFire);
         randomEventManager.OnRoomDestroyed.AddListener(CollapseColumn);
@@ -179,8 +179,20 @@ public class BuildingController : MonoBehaviour
     public void ChangeRoomToFire(int x, int y)
     {
         if (map[x, y].onFire) return;
-        
-        map[x,y].onFire = true;
+
+        if (map[x, y].withAnimal)
+        {
+            Store.Instance.deadAnimals++;
+        }
+
+        if (map[x, y].innerGameObject != null)
+        {
+            Destroy(map[x, y].innerGameObject);
+            map[x, y].innerGameObject = null;
+        }
+
+        map[x, y].onFire = true;
+
         Vector3 position = new Vector3(x * roomWidth, y * roomHeight, 0);
         map[x, y].innerGameObject = Instantiate(firePrefab, position, Quaternion.identity, transform);
     }

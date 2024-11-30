@@ -2,6 +2,7 @@ using DG.Tweening;
 using Unity.Mathematics;
 using UnityEngine;
 using UnityEngine.Events;
+using UnityEngine.SceneManagement;
 
 public class PlayerController : MonoBehaviour
 {
@@ -11,6 +12,7 @@ public class PlayerController : MonoBehaviour
     public Vector2 stepSize;
 
     private bool extinguishedFireThisTurn;
+    private bool blockInputs = false;
 
     public UnityEvent<int> onAnimalFalling;
 
@@ -27,6 +29,8 @@ public class PlayerController : MonoBehaviour
 
     void HandleMovement()
     {
+        if (blockInputs) return;
+
         Vector2Int newPosition = playerPosition;
         extinguishedFireThisTurn = false;
 
@@ -40,6 +44,8 @@ public class PlayerController : MonoBehaviour
             newPosition = new Vector2Int(playerPosition.x + 1, playerPosition.y);
         else if (Input.GetKeyDown(KeyCode.Space))
             PushAnimal(playerPosition.x, playerPosition.y);
+        else if (Input.GetKeyDown(KeyCode.P))
+            EndGameAndJumpFromBuilding();
         else
             return; // no action
 
@@ -59,10 +65,12 @@ public class PlayerController : MonoBehaviour
 
         onAnimalFalling.Invoke(x);
 
+        Store.Instance.savedAnimals++;
+
         GameObject animal = buildingController.map[x, y].innerGameObject;
 
         Vector3 fallTarget = new Vector3(animal.transform.position.x + .5f, 1f, animal.transform.position.z - 1.3f);
-        float duration = Mathf.Sqrt(2 * (animal.transform.position.y - 1) / 9.81f);
+        float duration = Mathf.Max(.1f, Mathf.Sqrt(2 * (Mathf.Max(.01f, animal.transform.position.y - 1)) / 9.81f));
 
         CameraController cameraController = Camera.main.GetComponent<CameraController>();
         float cameraSpeed = cameraController.smoothSpeed;
@@ -166,5 +174,25 @@ public class PlayerController : MonoBehaviour
             buildingController.ExtinguishFire(position.x, position.y, playerPosition.x, playerPosition.y);
             extinguishedFireThisTurn = true;
         }
+    }
+
+    void EndGameAndJumpFromBuilding()
+    {
+        blockInputs = true;
+
+        Vector3 fallTarget = new Vector3(transform.position.x + .5f, 1f, transform.position.z - 1.3f);
+        float duration = Mathf.Max(.1f, Mathf.Sqrt(2 * Mathf.Max(.01f, transform.position.y - 1) / 9.81f)) * 1.2f;
+
+        onAnimalFalling.Invoke(playerPosition.x);
+        Camera.main.GetComponent<CameraController>().smoothSpeed = .5f;
+
+        Sequence fallSequence = DOTween.Sequence();
+        fallSequence.Append(transform.DOMove(transform.position + new Vector3(0, 0.2f, fallTarget.z), .4f).SetEase(Ease.Linear));
+        fallSequence.Append(transform.DOMove(fallTarget, duration).SetEase(Ease.OutBounce));
+        fallSequence.Join(transform.DORotate(new Vector3(0, 0, 90), duration, RotateMode.Fast).SetEase(Ease.Linear));
+        fallSequence.OnKill(() =>
+        {
+            SceneManager.LoadScene("End screen");
+        });
     }
 }
