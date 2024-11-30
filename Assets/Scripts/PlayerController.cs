@@ -7,6 +7,7 @@ using UnityEngine.SceneManagement;
 public class PlayerController : MonoBehaviour
 {
     public BuildingController buildingController;
+    public RandomEventManager randomEventManager;
     public StatsManager statsManager;
     public Vector2Int playerPosition;
     public Vector2 stepSize;
@@ -19,6 +20,8 @@ public class PlayerController : MonoBehaviour
     void Start()
     {
         statsManager = FindObjectOfType<StatsManager>();
+        if (randomEventManager == null)
+            randomEventManager = FindObjectOfType<RandomEventManager>();
         transform.position = new Vector3(playerPosition.x * stepSize.x, playerPosition.y * stepSize.y, 0);
     }
 
@@ -35,13 +38,23 @@ public class PlayerController : MonoBehaviour
         extinguishedFireThisTurn = false;
 
         if (Input.GetKeyDown(KeyCode.W) || Input.GetKeyDown(KeyCode.UpArrow))
+        {
             newPosition = new Vector2Int(playerPosition.x, playerPosition.y + 1);
+            randomEventManager.eventComesInTurns--;
+        }
         else if (Input.GetKeyDown(KeyCode.A) || Input.GetKeyDown(KeyCode.LeftArrow))
+        {
             newPosition = new Vector2Int(playerPosition.x - 1, playerPosition.y);
-        else if (Input.GetKeyDown(KeyCode.S) || Input.GetKeyDown(KeyCode.DownArrow))
+            randomEventManager.eventComesInTurns--;
+        }
+        else if (Input.GetKeyDown(KeyCode.S) || Input.GetKeyDown(KeyCode.DownArrow)){
             newPosition = new Vector2Int(playerPosition.x, playerPosition.y - 1);
-        else if (Input.GetKeyDown(KeyCode.D) || Input.GetKeyDown(KeyCode.RightArrow))
+            randomEventManager.eventComesInTurns--;
+        }
+        else if (Input.GetKeyDown(KeyCode.D) || Input.GetKeyDown(KeyCode.RightArrow)){
             newPosition = new Vector2Int(playerPosition.x + 1, playerPosition.y);
+            randomEventManager.eventComesInTurns--;
+        }
         else if (Input.GetKeyDown(KeyCode.Space))
             PushAnimal(playerPosition.x, playerPosition.y);
         else if (Input.GetKeyDown(KeyCode.P))

@@ -78,6 +78,12 @@ public class RandomEventManager : MonoBehaviour
             EvaluateFireMatrix();
 
         }
+
+        if (eventComesInTurns == 0)
+        {
+            tick = true;
+            eventComesInTurns = Random.Range(eventComesInTurnsMin, eventComesInTurnsMax);
+        }
     }
 
     void FillFireMatrix()
@@ -122,6 +128,12 @@ public class RandomEventManager : MonoBehaviour
         {
             for (int l = 0; l < ProbabilityFireMatrix.GetLength(1); l++)
             {
+                if (buildingController.map[k, l].type == BuildingController.RoomType.Empty)
+                {
+                    ProbabilityFireMatrix[k, l].canFire = false;
+                    ProbabilityFireMatrix[k, l].isInFire = false;
+                }
+                
                 if (ProbabilityFireMatrix[k, l].isInFire)
                 {
                     if (ProbabilityFireMatrix[k, l].FireTickToDestoyed == 0)
@@ -140,7 +152,7 @@ public class RandomEventManager : MonoBehaviour
 
     private void ColumnUpdate(int col, int row)
     {
-        //ProbabilityFireMatrix[col, row].isInFire = false;
+        ProbabilityFireMatrix[col, row].isInFire = false;
 
         //OnRoomDestroyed.Invoke();
 

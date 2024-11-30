@@ -46,8 +46,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   buildingController: {fileID: 0}
   eventComesInTurns: 0
-  eventComesInTurnsMax: 3
-  eventComesInTurnsMin: 6
+  eventComesInTurnsMax: 5
+  eventComesInTurnsMin: 10
   spawnNewNumberOfFires: 0
   spawnNewNumberOfFiresMax: 0
   spawnNewNumberOfFiresMin: 5
