@@ -71,10 +71,10 @@ public class PlayerController : MonoBehaviour
         if (newRoom.type == BuildingController.RoomType.Empty)
             return false;
 
-        if (newPosition.y > playerPosition.y && oldRoom.type != BuildingController.RoomType.Stairs && oldRoom.type != BuildingController.RoomType.outsideStairsBottom) // stairs up
+        if (newPosition.y > playerPosition.y && oldRoom.type != BuildingController.RoomType.Stairs && oldRoom.type != BuildingController.RoomType.outsideStairs) // stairs up
             return false;
 
-        if (newPosition.y < playerPosition.y && newRoom.type != BuildingController.RoomType.Stairs && oldRoom.type != BuildingController.RoomType.outsideStairsTop) // stairs down
+        if (newPosition.y < playerPosition.y && newRoom.type != BuildingController.RoomType.Stairs && oldRoom.type != BuildingController.RoomType.outsideStairs) // stairs down
             return false;
 
         if (newRoom.onFire) // fire check
@@ -100,10 +100,10 @@ public class PlayerController : MonoBehaviour
         if (!newRoom.onFire)
             return false;
 
-        if (position.y > playerPosition.y && oldRoom.type != BuildingController.RoomType.Stairs && oldRoom.type != BuildingController.RoomType.outsideStairsBottom) // stairs up
+        if (position.y > playerPosition.y && oldRoom.type != BuildingController.RoomType.Stairs && oldRoom.type != BuildingController.RoomType.outsideStairs) // stairs up
             return false;
 
-        if (position.y < playerPosition.y && newRoom.type != BuildingController.RoomType.Stairs && oldRoom.type != BuildingController.RoomType.outsideStairsTop) // stairs down
+        if (position.y < playerPosition.y && newRoom.type != BuildingController.RoomType.Stairs && oldRoom.type != BuildingController.RoomType.outsideStairs) // stairs down
             return false;
 
         return true;

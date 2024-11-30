@@ -11,8 +11,9 @@ public class BuildingController : MonoBehaviour
         Stairs,
         LeftWall,
         RightWall,
-        outsideStairsBottom,
-        outsideStairsTop
+        LeftDoor,
+        RightDoor,
+        outsideStairs,
     }
 
     [System.Serializable]
@@ -35,14 +36,17 @@ public class BuildingController : MonoBehaviour
 
     [Header("Prefab References")]
     public GameObject fireExtinguisherPrefab;
+
     public GameObject passPrefab;
     public GameObject stairsPrefab;
     public GameObject leftWallPrefab;
     public GameObject rightWallPrefab;
-    public GameObject firePrefab;
+    public GameObject leftDoorPrefab;
+    public GameObject rightDoorPrefab;
+    public GameObject outsideStairsPrefab;
+
     public GameObject personPrefab;
-    public GameObject outsideStairsBottom;
-    public GameObject outsideStairsTop;
+    public GameObject firePrefab;
 
     [Header("Room Dimensions")]
     public float roomWidth;
@@ -78,7 +82,7 @@ public class BuildingController : MonoBehaviour
             {
                 map[x, y] = new Room
                 {
-                    type = (y + (x == 0 ? 1 : 0)) % 2 == 0 ? RoomType.outsideStairsBottom : RoomType.outsideStairsTop,
+                    type = RoomType.outsideStairs,
                     onFire = false,
                     withHuman = false,
                     containsFireExtinguisher = false,
@@ -166,8 +170,7 @@ public class BuildingController : MonoBehaviour
             RoomType.Stairs => stairsPrefab,
             RoomType.LeftWall => leftWallPrefab,
             RoomType.RightWall => rightWallPrefab,
-            RoomType.outsideStairsBottom => outsideStairsBottom,
-            RoomType.outsideStairsTop => outsideStairsTop,
+            RoomType.outsideStairs => outsideStairsPrefab,
             _ => null,
         };
     }

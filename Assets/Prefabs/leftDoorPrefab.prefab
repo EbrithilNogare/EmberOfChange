@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 5963780206582051053}
   - component: {fileID: 8767751842997871622}
   m_Layer: 0
-  m_Name: Stairs outside top
+  m_Name: leftDoorPrefab
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -61,7 +61,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 187c19ead681cbb459415878b6bad8ce, type: 2}
+  - {fileID: 2100000, guid: da51f372f73fab24aaf9171682ecd5cd, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
