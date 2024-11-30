@@ -1592,6 +1592,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 180168446}
     m_Modifications:
+    - target: {fileID: 28318025172332575, guid: 87a768541b8b8bb46a756e79fdda0b2a, type: 3}
+      propertyPath: buildingController
+      value: 
+      objectReference: {fileID: 31700880}
     - target: {fileID: 7843760583590280048, guid: 87a768541b8b8bb46a756e79fdda0b2a, type: 3}
       propertyPath: m_Name
       value: RandomMessManager
