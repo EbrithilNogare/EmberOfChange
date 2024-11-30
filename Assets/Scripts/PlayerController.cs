@@ -44,10 +44,13 @@ public class PlayerController : MonoBehaviour
             ExtinguishFire(newPosition);
         else if (!extinguishedFireThisTurn && IsValidMove(newPosition))
             SetPlayerPosition(newPosition);
+
     }
 
     void SetPlayerPosition(Vector2Int newPosition)
     {
+        // if(map) // todo
+
         playerPosition = newPosition;
         transform.DOMove(new Vector3(playerPosition.x * stepSize.x, playerPosition.y * stepSize.y, 0), 0.5f, false);
     }
@@ -77,6 +80,9 @@ public class PlayerController : MonoBehaviour
 
     bool CanExtinguishFire(Vector2Int position)
     {
+        if (position.x < 0 || position.y < 0 || position.x >= buildingController.map.GetLength(0) || position.y >= buildingController.map.GetLength(1))
+            return false;
+
         if (statsManager.fireExtinguisher <= 0)
             return false;
 

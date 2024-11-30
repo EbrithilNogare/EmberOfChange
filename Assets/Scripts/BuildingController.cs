@@ -1,3 +1,4 @@
+using DG.Tweening;
 using UnityEngine;
 using UnityEngine.Events;
 
@@ -201,4 +202,48 @@ public class BuildingController : MonoBehaviour
         }
         return false;
     }
+
+    public void BombColumn(int column)
+    {
+        CollapseColumn(column, 0);
+    }
+
+    public void CollapseColumn(int column, int floor)
+    {
+
+        map[column, floor].type = RoomType.Empty;
+        map[column, floor].onFire = false;
+        map[column, floor].withHuman = false;
+
+        Destroy(map[column, floor].roomGameObject);
+        map[column, floor].roomGameObject = null;
+        OnRoomDestroyed.Invoke();
+
+        for (int y = floor; y < height - 1; y++)
+        {
+            map[column, y] = map[column, y + 1];
+            MoveRoomObject(column, y, column, y + 1);
+        }
+
+    }
+
+    void MoveRoomObject(int oldX, int oldY, int newX, int newY)
+    {
+        if (map[newX, newY].roomGameObject != null)
+        {
+            map[newX, newY].roomGameObject.transform.DOMove(new Vector3(oldX * roomWidth, oldY * roomHeight, 0), 0.5f, false);
+            map[oldX, oldY].roomGameObject = map[newX, newY].roomGameObject;
+            map[newX, newY].roomGameObject = null;
+            //map[newX, newY].roomGameObject.transform.position = new Vector3(newX * roomWidth, newY * roomHeight, 0);
+        }
+    }
+    public void DebugBombRandomColumn(int column)
+    {
+        BombColumn(column);
+    }
+    public void DebugRemoveRandomRoom(int column)
+    {
+        CollapseColumn(column, column);
+    }
+
 }
