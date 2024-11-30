@@ -218,6 +218,11 @@ public class BuildingController : MonoBehaviour
 
         Destroy(map[column, floor].roomGameObject);
         map[column, floor].roomGameObject = null;
+        if (map[column, floor].fireExtinguisherGameObject != null)
+        {
+            Destroy(map[column, floor].fireExtinguisherGameObject);
+            map[column, floor].fireExtinguisherGameObject = null;
+        }
         OnRoomDestroyed.Invoke();
 
         for (int y = floor; y < height - 1; y++)
@@ -233,9 +238,9 @@ public class BuildingController : MonoBehaviour
         if (map[newX, newY].roomGameObject != null)
         {
             map[newX, newY].roomGameObject.transform.DOMove(new Vector3(oldX * roomWidth, oldY * roomHeight, 0), 0.5f, false);
-            map[oldX, oldY].roomGameObject = map[newX, newY].roomGameObject;
-            map[newX, newY].roomGameObject = null;
-            //map[newX, newY].roomGameObject.transform.position = new Vector3(newX * roomWidth, newY * roomHeight, 0);
+            map[newX, newY].fireExtinguisherGameObject?.transform.DOMove(new Vector3(oldX * roomWidth, oldY * roomHeight, 0), 0.5f, false);
+            map[oldX, oldY] = map[newX, newY];
+            map[newX, newY] = new Room();
         }
     }
 
