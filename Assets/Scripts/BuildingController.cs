@@ -1,4 +1,5 @@
 using DG.Tweening;
+using System.Linq;
 using UnityEngine;
 using UnityEngine.Events;
 
@@ -62,73 +63,28 @@ public class BuildingController : MonoBehaviour
         InstantiateRooms();
     }
 
+    private RoomType[] emptyRooms = new RoomType[] { RoomType.Pass, RoomType.LeftWall, RoomType.RightWall, RoomType.LeftDoor, RoomType.RightDoor };
+
     void GenerateMap()
     {
         for (int y = 0; y < height; y++)
         {
-            // Fill middle part
             for (int x = 2; x < width - 2; x++)
             {
-                var typeOfRoom = RoomType.Pass;
-
-
-                map[x, y] = new Room
-                {
-                    type = typeOfRoom,
-                    onFire = false,
-                    withHuman = false,
-                    containsFireExtinguisher = false,
-                };
+                var typeOfRoom = emptyRooms[Random.Range(0, emptyRooms.Length - 1)];
+                map[x, y] = new Room { type = typeOfRoom };
             }
 
-            // Stairs
-            map[0, y] = new Room
-            {
-                type = RoomType.outsideStairs,
-                onFire = false,
-                withHuman = false,
-                containsFireExtinguisher = false,
-            };
-
-            map[width - 1, y] = new Room
-            {
-                type = RoomType.outsideStairs,
-                onFire = false,
-                withHuman = false,
-                containsFireExtinguisher = false,
-            };
-
-            // Doors
-            map[1, y] = new Room
-            {
-                type = RoomType.LeftWall,
-                onFire = false,
-                withHuman = false,
-                containsFireExtinguisher = false,
-            };
-
-            map[width - 2, y] = new Room
-            {
-                type = RoomType.RightWall,
-                onFire = false,
-                withHuman = false,
-                containsFireExtinguisher = false,
-            };
+            map[0, y] = new Room { type = RoomType.outsideStairs };
+            map[width - 1, y] = new Room { type = RoomType.outsideStairs };
+            map[1, y] = new Room { type = RoomType.LeftWall };
+            map[width - 2, y] = new Room { type = RoomType.RightWall };
         }
 
-        // Randomly place stairs within inner columns for connectivity
         for (int y = 0; y < height - 1; y++)
         {
-            int stairsPlaced = 0;
-            while (stairsPlaced < 2)
-            {
-                int stairX = Random.Range(2, width - 2);
-                if (map[stairX, y].type != RoomType.Stairs)
-                {
-                    map[stairX, y].type = RoomType.Stairs;
-                    stairsPlaced++;
-                }
-            }
+            int stairX = Random.Range(2, width - 3);
+            map[stairX, y].type = RoomType.Stairs;
         }
 
         PlaceRandomElements(fireCount, true, false);
@@ -136,23 +92,22 @@ public class BuildingController : MonoBehaviour
         PlaceFireExtinguishers();
     }
 
-
     void PlaceFireExtinguishers()
     {
         int placed = 0;
+        int loopCount = 0;
         while (placed < fireExtinguisherCount)
         {
+            if (loopCount++ > 10000) throw new System.Exception("Infinite Loop");
             int x = Random.Range(1, width - 1);
             int y = Random.Range(1, height);
-
-            if (map[x, y].type == RoomType.Pass &&
+            if (emptyRooms.Contains(map[x, y].type) &&
                 !map[x, y].onFire &&
                 !map[x, y].withHuman &&
                 !map[x, y].containsFireExtinguisher)
             {
                 map[x, y].containsFireExtinguisher = true;
-                Vector3 position = new Vector3(x * roomWidth, y * roomHeight, 0);
-                map[x, y].fireExtinguisherGameObject = Instantiate(fireExtinguisherPrefab, position, Quaternion.identity, transform);
+                map[x, y].fireExtinguisherGameObject = Instantiate(fireExtinguisherPrefab, new Vector3(x * roomWidth, y * roomHeight, 0), Quaternion.identity, transform);
                 placed++;
             }
         }
@@ -161,11 +116,14 @@ public class BuildingController : MonoBehaviour
     void PlaceRandomElements(int count, bool fire, bool human)
     {
         int placed = 0;
+        int loopCount = 0;
         while (placed < count)
         {
+            if (loopCount++ > 10000) throw new System.Exception("Infinite Loop");
+
             int x = Random.Range(1, width - 1);
             int y = Random.Range(1, height);
-            if (map[x, y].type == RoomType.Pass && !map[x, y].onFire && !map[x, y].withHuman)
+            if (emptyRooms.Contains(map[x, y].type) && !map[x, y].onFire && !map[x, y].withHuman)
             {
                 map[x, y].onFire = fire;
                 map[x, y].withHuman = human;
@@ -202,6 +160,8 @@ public class BuildingController : MonoBehaviour
             RoomType.Stairs => stairsPrefab,
             RoomType.LeftWall => leftWallPrefab,
             RoomType.RightWall => rightWallPrefab,
+            RoomType.LeftDoor => leftDoorPrefab,
+            RoomType.RightDoor => rightDoorPrefab,
             RoomType.outsideStairs => outsideStairsPrefab,
             _ => null,
         };
