@@ -10,7 +10,9 @@ public class BuildingController : MonoBehaviour
         Pass,
         Stairs,
         LeftWall,
-        RightWall
+        RightWall,
+        outsideStairsBottom,
+        outsideStairsTop
     }
 
     [System.Serializable]
@@ -39,6 +41,8 @@ public class BuildingController : MonoBehaviour
     public GameObject rightWallPrefab;
     public GameObject firePrefab;
     public GameObject personPrefab;
+    public GameObject outsideStairsBottom;
+    public GameObject outsideStairsTop;
 
     [Header("Room Dimensions")]
     public float roomWidth;
@@ -59,7 +63,7 @@ public class BuildingController : MonoBehaviour
         for (int y = 0; y < height; y++)
         {
             int stairsPlaced = 0;
-            for (int x = 0; x < width; x++)
+            for (int x = 1; x < width - 1; x++)
             {
                 map[x, y] = new Room
                 {
@@ -70,9 +74,20 @@ public class BuildingController : MonoBehaviour
                 };
             }
 
+            for (int x = 0; x < width; x += width - 1)
+            {
+                map[x, y] = new Room
+                {
+                    type = (y + (x == 0 ? 1 : 0)) % 2 == 0 ? RoomType.outsideStairsBottom : RoomType.outsideStairsTop,
+                    onFire = false,
+                    withHuman = false,
+                    containsFireExtinguisher = false,
+                };
+            }
+
             while (stairsPlaced < 2 && y != height - 1)
             {
-                int stairX = Random.Range(0, width);
+                int stairX = Random.Range(1, width - 1);
                 if (map[stairX, y].type != RoomType.Stairs)
                 {
                     map[stairX, y].type = RoomType.Stairs;
@@ -91,7 +106,7 @@ public class BuildingController : MonoBehaviour
         int placed = 0;
         while (placed < fireExtinguisherCount)
         {
-            int x = Random.Range(0, width);
+            int x = Random.Range(1, width - 1);
             int y = Random.Range(1, height);
 
             if (map[x, y].type == RoomType.Pass &&
@@ -112,7 +127,7 @@ public class BuildingController : MonoBehaviour
         int placed = 0;
         while (placed < count)
         {
-            int x = Random.Range(0, width);
+            int x = Random.Range(1, width - 1);
             int y = Random.Range(1, height);
             if (map[x, y].type == RoomType.Pass && !map[x, y].onFire && !map[x, y].withHuman)
             {
@@ -151,6 +166,8 @@ public class BuildingController : MonoBehaviour
             RoomType.Stairs => stairsPrefab,
             RoomType.LeftWall => leftWallPrefab,
             RoomType.RightWall => rightWallPrefab,
+            RoomType.outsideStairsBottom => outsideStairsBottom,
+            RoomType.outsideStairsTop => outsideStairsTop,
             _ => null,
         };
     }
