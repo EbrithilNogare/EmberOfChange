@@ -168,8 +168,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   width: 8
   height: 20
+  fireExtinguisherCount: 10
   fireCount: 23
   peopleCount: 10
+  fireExtinguisherPrefab: {fileID: 6741263600372567620, guid: c8943ff74a835754d8d48fd5171601b5, type: 3}
   passPrefab: {fileID: 8994669005690676939, guid: 3b92c5d02f6fd674d9d09d1fd791bbe9, type: 3}
   stairsPrefab: {fileID: 8994669005690676939, guid: 0df5bb7c9add57d4ead8af478b29c829, type: 3}
   leftWallPrefab: {fileID: 8994669005690676939, guid: 3b92c5d02f6fd674d9d09d1fd791bbe9, type: 3}

@@ -15,19 +15,23 @@ public class BuildingController : MonoBehaviour
     [System.Serializable]
     public struct Room
     {
-        public GameObject gameObject;
+        public GameObject roomGameObject;
+        public GameObject fireExtinguisherGameObject;
         public bool onFire;
         public bool withHuman;
+        public bool containsFireExtinguisher;
         public RoomType type;
     }
 
     [Header("Map Settings")]
     public int width;
     public int height;
+    public int fireExtinguisherCount;
     public int fireCount;
     public int peopleCount;
 
     [Header("Prefab References")]
+    public GameObject fireExtinguisherPrefab;
     public GameObject passPrefab;
     public GameObject stairsPrefab;
     public GameObject leftWallPrefab;
@@ -60,7 +64,8 @@ public class BuildingController : MonoBehaviour
                 {
                     type = RoomType.Pass,
                     onFire = false,
-                    withHuman = false
+                    withHuman = false,
+                    containsFireExtinguisher = false,
                 };
             }
 
@@ -77,6 +82,27 @@ public class BuildingController : MonoBehaviour
 
         PlaceRandomElements(fireCount, true, false);
         PlaceRandomElements(peopleCount, false, true);
+        PlaceFireExtinguishers();
+    }
+    void PlaceFireExtinguishers()
+    {
+        int placed = 0;
+        while (placed < fireExtinguisherCount)
+        {
+            int x = Random.Range(0, width);
+            int y = Random.Range(1, height);
+
+            if (map[x, y].type == RoomType.Pass &&
+                !map[x, y].onFire &&
+                !map[x, y].withHuman &&
+                !map[x, y].containsFireExtinguisher)
+            {
+                map[x, y].containsFireExtinguisher = true;
+                Vector3 position = new Vector3(x * roomWidth, y * roomHeight, 0);
+                map[x, y].fireExtinguisherGameObject = Instantiate(fireExtinguisherPrefab, position, Quaternion.identity, transform);
+                placed++;
+            }
+        }
     }
 
     void PlaceRandomElements(int count, bool fire, bool human)
@@ -106,7 +132,7 @@ public class BuildingController : MonoBehaviour
                 if (prefab != null)
                 {
                     Vector3 position = new Vector3(x * roomWidth, y * roomHeight, 0);
-                    room.gameObject = Instantiate(prefab, position, Quaternion.identity, transform);
+                    room.roomGameObject = Instantiate(prefab, position, Quaternion.identity, transform);
                     map[x, y] = room;
                 }
             }
@@ -147,14 +173,14 @@ public class BuildingController : MonoBehaviour
 
     void UpdateRoom(int x, int y)
     {
-        if (map[x, y].gameObject != null)
-            Destroy(map[x, y].gameObject);
+        if (map[x, y].roomGameObject != null)
+            Destroy(map[x, y].roomGameObject);
 
         GameObject prefab = GetPrefabForRoom(map[x, y]);
         if (prefab != null)
         {
             Vector3 position = new Vector3(x * roomWidth, y * roomHeight, 0);
-            map[x, y].gameObject = Instantiate(prefab, position, Quaternion.identity, transform);
+            map[x, y].roomGameObject = Instantiate(prefab, position, Quaternion.identity, transform);
         }
     }
 
