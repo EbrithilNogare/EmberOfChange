@@ -130,7 +130,6 @@ public class BuildingController : MonoBehaviour
                 {
                     Vector3 position = new Vector3(x * roomWidth, y * roomHeight, 0);
                     map[x, y].roomGameObject = Instantiate(prefab, position, Quaternion.identity, transform);
-                    map[x, y] = room;
                 }
 
                 if (room.onFire)
