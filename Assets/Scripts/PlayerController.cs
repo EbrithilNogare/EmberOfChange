@@ -10,6 +10,8 @@ public class PlayerController : MonoBehaviour
 
     private bool extinguishedFireThisTurn;
 
+    public UnityEvent<int> onAnimalFalling;
+
     void Start()
     {
         statsManager = FindObjectOfType<StatsManager>();
@@ -34,6 +36,10 @@ public class PlayerController : MonoBehaviour
             newPosition = new Vector2Int(playerPosition.x, playerPosition.y - 1);
         else if (Input.GetKeyDown(KeyCode.D) || Input.GetKeyDown(KeyCode.RightArrow))
             newPosition = new Vector2Int(playerPosition.x + 1, playerPosition.y);
+        }
+        else if (Input.GetKeyDown(KeyCode.Space))
+        {
+            onAnimalFalling.Invoke(newPosition.x);
 
         if (CanExtinguishFire(newPosition))
             ExtinguishFire(newPosition);
