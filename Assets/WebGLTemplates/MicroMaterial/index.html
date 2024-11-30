@@ -115,6 +115,10 @@
     const spinner = document.querySelector('.spinner');
 
     const canFullscreen = (function () {
+      if(window.location !== window.parent.location) { // in iframe
+        return false;
+      }
+
       for (const key of [
         'exitFullscreen',
         'webkitExitFullscreen',
