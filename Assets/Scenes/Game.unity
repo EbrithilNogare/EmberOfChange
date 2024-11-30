@@ -1328,8 +1328,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   buildingController: {fileID: 31700880}
-  player: {fileID: 736105831}
-  smoothSpeed: 0.01
+  target: {fileID: 736105831}
+  smoothSpeed: 0.02
   verticalOffset: 4
 --- !u!1 &1855150088
 GameObject:

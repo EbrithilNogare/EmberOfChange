@@ -5,7 +5,7 @@ public class CameraController : MonoBehaviour
 {
     [SerializeField]
     public BuildingController buildingController;
-    public Transform player;
+    public Transform target;
     public float smoothSpeed = 0.125f;
     public float verticalOffset = 2f;
 
@@ -17,7 +17,7 @@ public class CameraController : MonoBehaviour
 
     void LateUpdate()
     {
-        Vector3 desiredPosition = new Vector3(transform.position.x, player.position.y + verticalOffset, transform.position.z);
+        Vector3 desiredPosition = new Vector3(transform.position.x, target.position.y + verticalOffset, transform.position.z);
         Vector3 smoothedPosition = Vector3.Lerp(transform.position, desiredPosition, smoothSpeed);
         transform.position = smoothedPosition;
     }

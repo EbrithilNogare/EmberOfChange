@@ -38,13 +38,43 @@ public class PlayerController : MonoBehaviour
         else if (Input.GetKeyDown(KeyCode.D) || Input.GetKeyDown(KeyCode.RightArrow))
             newPosition = new Vector2Int(playerPosition.x + 1, playerPosition.y);
         else if (Input.GetKeyDown(KeyCode.Space))
-            onAnimalFalling.Invoke(newPosition.x);
+            PushAnimal(playerPosition.x, playerPosition.y);
 
         if (CanExtinguishFire(newPosition))
             ExtinguishFire(newPosition);
         else if (!extinguishedFireThisTurn && IsValidMove(newPosition))
             SetPlayerPosition(newPosition);
 
+    }
+
+    private void PushAnimal(int x, int y)
+    {
+        if (!buildingController.map[x, y].withAnimal) return;
+
+        onAnimalFalling.Invoke(x);
+
+        GameObject animal = buildingController.map[x, y].innerGameObject;
+
+        Vector3 fallTarget = new Vector3(animal.transform.position.x, 1f, animal.transform.position.z - 1.3f);
+        float duration = Mathf.Sqrt(2 * (animal.transform.position.y - 1) / 9.81f);
+
+        CameraController cameraController = Camera.main.GetComponent<CameraController>();
+        float cameraSpeed = cameraController.smoothSpeed;
+        cameraController.smoothSpeed = .5f;
+        Camera.main.GetComponent<CameraController>().target = animal.transform;
+
+        Sequence fallSequence = DOTween.Sequence();
+        fallSequence.Append(animal.transform.DOMove(animal.transform.position + new Vector3(0, 0, fallTarget.z), .1f).SetEase(Ease.Linear));
+        fallSequence.Append(animal.transform.DOMove(fallTarget, duration).SetEase(Ease.OutBounce));
+        fallSequence.Join(animal.transform.DORotate(new Vector3(0, 0, 90), duration, RotateMode.WorldAxisAdd).SetEase(Ease.Linear));
+        fallSequence.OnKill(() =>
+        {
+            cameraController.smoothSpeed = cameraSpeed;
+            cameraController.target = transform;
+            Destroy(animal);
+        }); // todo maybe add some fadeout
+        buildingController.map[x, y].withAnimal = false;
+        buildingController.map[x, y].innerGameObject = null;
     }
 
     void SetPlayerPosition(Vector2Int newPosition)
