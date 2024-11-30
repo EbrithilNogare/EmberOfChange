@@ -114,7 +114,7 @@ public class PlayerController : MonoBehaviour
         if (statsManager.fireExtinguisher > 0)
         {
             statsManager.UseExtinguisher();
-            buildingController.ExtinguishFire(position.x, position.y);
+            buildingController.ExtinguishFire(position.x, position.y, playerPosition.x, playerPosition.y);
             extinguishedFireThisTurn = true;
         }
     }

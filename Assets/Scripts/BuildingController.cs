@@ -170,20 +170,20 @@ public class BuildingController : MonoBehaviour
         throw new System.NotImplementedException();
     }
 
-    public void ExtinguishFire(int x, int y)
+    public void ExtinguishFire(int roomX, int roomY, int playerX, int playerY)
     {
-        if (map[x, y].onFire && (IsAdjacentToStairs(x, y) || IsOnSameFloor(x, y)))
+        if (map[roomX, roomY].onFire && (CheckFireOnReach(roomX, roomY, playerX, playerY)))
         {
-            map[x, y].onFire = false;
+            map[roomX, roomY].onFire = false;
 
             Debug.Log("Extinguishing Fire");
-            if (map[x, y].innerGameObject != null)
+            if (map[roomX, roomY].innerGameObject != null)
             {
-                Destroy(map[x, y].innerGameObject);
+                Destroy(map[roomX, roomY].innerGameObject);
                 fireExtinguisherCount--;
             }
 
-            UpdateRoom(x, y);
+            UpdateRoom(roomX, roomY);
         }
     }
 
@@ -199,23 +199,13 @@ public class BuildingController : MonoBehaviour
             map[x, y].roomGameObject = Instantiate(prefab, position, Quaternion.identity, transform);
         }
     }
-
-    bool IsAdjacentToStairs(int x, int y)
+    bool CheckFireOnReach(int roomX, int roomY, int playerX, int playerY)
     {
-        return (x > 0 && map[x - 1, y].type == RoomType.Stairs) ||
-               (x < width - 1 && map[x + 1, y].type == RoomType.Stairs) ||
-               (y > 0 && map[x, y - 1].type == RoomType.Stairs) ||
-               (y < height - 1 && map[x, y + 1].type == RoomType.Stairs);
-    }
+        bool isPlayerDirectlyLeft = playerX == roomX - 1 && playerY == roomY;
+        bool isPlayerDirectlyRight = playerX == roomX + 1 && playerY == roomY;
+        bool isPlayerBelowFireOnStairs = playerX == roomX && playerY + 1 == roomY && map[playerX, playerY].type == RoomType.Stairs;
 
-    bool IsOnSameFloor(int x, int y)
-    {
-        for (int i = 0; i < width; i++)
-        {
-            if (map[i, y].type == RoomType.Stairs)
-                return true;
-        }
-        return false;
+        return isPlayerDirectlyLeft || isPlayerDirectlyRight || isPlayerBelowFireOnStairs;
     }
 
     public void BombColumn(int column)
