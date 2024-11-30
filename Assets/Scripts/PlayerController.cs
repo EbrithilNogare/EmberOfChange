@@ -44,7 +44,6 @@ public class PlayerController : MonoBehaviour
             ExtinguishFire(newPosition);
         else if (!extinguishedFireThisTurn && IsValidMove(newPosition))
             SetPlayerPosition(newPosition);
-
     }
 
     private void PushAnimal(int x, int y)
@@ -55,7 +54,7 @@ public class PlayerController : MonoBehaviour
 
         GameObject animal = buildingController.map[x, y].innerGameObject;
 
-        Vector3 fallTarget = new Vector3(animal.transform.position.x, 1f, animal.transform.position.z - 1.3f);
+        Vector3 fallTarget = new Vector3(animal.transform.position.x + .5f, 1f, animal.transform.position.z - 1.3f);
         float duration = Mathf.Sqrt(2 * (animal.transform.position.y - 1) / 9.81f);
 
         CameraController cameraController = Camera.main.GetComponent<CameraController>();
@@ -66,7 +65,7 @@ public class PlayerController : MonoBehaviour
         Sequence fallSequence = DOTween.Sequence();
         fallSequence.Append(animal.transform.DOMove(animal.transform.position + new Vector3(0, 0, fallTarget.z), .1f).SetEase(Ease.Linear));
         fallSequence.Append(animal.transform.DOMove(fallTarget, duration).SetEase(Ease.OutBounce));
-        fallSequence.Join(animal.transform.DORotate(new Vector3(0, 0, 90), duration, RotateMode.WorldAxisAdd).SetEase(Ease.Linear));
+        fallSequence.Join(animal.transform.DORotate(new Vector3(0, 0, 90), duration, RotateMode.Fast).SetEase(Ease.Linear));
         fallSequence.OnKill(() =>
         {
             cameraController.smoothSpeed = cameraSpeed;
@@ -119,7 +118,6 @@ public class PlayerController : MonoBehaviour
         return true;
     }
 
-
     bool CanExtinguishFire(Vector2Int position)
     {
         if (position.x < 0 || position.y < 0 || position.x >= buildingController.map.GetLength(0) || position.y >= buildingController.map.GetLength(1))
@@ -151,7 +149,6 @@ public class PlayerController : MonoBehaviour
 
         return true;
     }
-
 
     void ExtinguishFire(Vector2Int position)
     {
