@@ -49,7 +49,12 @@ public class PlayerController : MonoBehaviour
 
     void SetPlayerPosition(Vector2Int newPosition)
     {
-        // if(map) // todo
+        if (buildingController.map[newPosition.x, newPosition.y].containsFireExtinguisher && statsManager.fireExtinguisher < statsManager.maxFireExtinguisherCount)
+        {
+            statsManager.FindExtinguisher();
+            buildingController.map[newPosition.x, newPosition.y].containsFireExtinguisher = false;
+            buildingController.map[newPosition.x, newPosition.y].fireExtinguisherGameObject.SetActive(false);
+        }
 
         playerPosition = newPosition;
         transform.DOMove(new Vector3(playerPosition.x * stepSize.x, playerPosition.y * stepSize.y, 0), 0.5f, false);

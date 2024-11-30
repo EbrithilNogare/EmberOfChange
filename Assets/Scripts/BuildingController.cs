@@ -85,6 +85,7 @@ public class BuildingController : MonoBehaviour
         PlaceRandomElements(peopleCount, false, true);
         PlaceFireExtinguishers();
     }
+
     void PlaceFireExtinguishers()
     {
         int placed = 0;
@@ -237,10 +238,12 @@ public class BuildingController : MonoBehaviour
             //map[newX, newY].roomGameObject.transform.position = new Vector3(newX * roomWidth, newY * roomHeight, 0);
         }
     }
+
     public void DebugBombRandomColumn(int column)
     {
         BombColumn(column);
     }
+
     public void DebugRemoveRandomRoom(int column)
     {
         CollapseColumn(column, column);

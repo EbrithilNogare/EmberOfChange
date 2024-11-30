@@ -5,6 +5,7 @@ public class StatsManager : MonoBehaviour
 {
     [SerializeField]
     public float health = 100f;
+    public int maxFireExtinguisherCount = 5;
     public int fireExtinguisher = 5;
 
     [SerializeField] private int[] playerPosition;
@@ -20,7 +21,6 @@ public class StatsManager : MonoBehaviour
         playerPosition = new int[2];
     }
 
-    // Update is called once per frame
     void Update()
     {
 
