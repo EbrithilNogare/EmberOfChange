@@ -26,7 +26,7 @@ public class BombButtonFunc : MonoBehaviour
 
     public void BombColumn()
     {
-        GetComponent<AudioSource>().Play();
+        FindObjectOfType<BombsController>().PlaySound();
         buildingController.CollapseColumn(transform.GetSiblingIndex() + 1, 2);
         toggle.isOn = false;
         transform.parent.gameObject.SetActive(false);

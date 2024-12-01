@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -24,7 +22,7 @@ public class BombsController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
+
     }
 
     public void GenerateButtons()
@@ -38,5 +36,10 @@ public class BombsController : MonoBehaviour
     public void ShowingBombButtons()
     {
         BombsButtonParent.SetActive(isBombModeActive.isOn);
+    }
+
+    public void PlaySound()
+    {
+        GetComponent<AudioSource>().Play();
     }
 }
