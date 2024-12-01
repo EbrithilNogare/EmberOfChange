@@ -129,13 +129,11 @@ public class PlayerController : MonoBehaviour
 
         playerPosition = newPosition;
 
-        blockInputs = true;
         animator.
         transform
             .DOMove(new Vector3(playerPosition.x * stepSize.x, playerPosition.y * stepSize.y, 0), 0.4f, false).SetEase(Ease.Linear)
             .OnComplete(() =>
             {
-                blockInputs = false;
                 animator.SetBool("Running", false);
             });
     }
