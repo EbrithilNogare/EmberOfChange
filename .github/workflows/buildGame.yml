@@ -176,12 +176,12 @@ jobs:
       fail-fast: false
       matrix:
         targetPlatform: # 🔴 Select platforms to deploy to Itch (must match one in `targetPlatforms`)
+          - { platform: WebGL, itchChannel: "html5" } # WebGL
           # - { platform: StandaloneOSX, itchChannel: "osx" } # Build a macOS standalone (Intel 64-bit)
           # - { platform: StandaloneWindows, itchChannel: "win32" } # Build a Windows standalone
           - { platform: StandaloneWindows64, itchChannel: "windows" } # Build a Windows 64-bit standalone
           # - { platform: StandaloneLinux64, itchChannel: "linux" } # Build a Linux 64-bit standalone
           #- { platform: Android, itchChannel: "android" } # Build an Android .apk standalone app
-          - { platform: WebGL, itchChannel: "html5" } # WebGL
     needs: buildForAllSupportedPlatforms
     steps:
       - uses: actions/download-artifact@v4
