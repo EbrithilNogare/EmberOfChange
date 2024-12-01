@@ -1,27 +1,29 @@
-using System;
-using System.Collections;
-using System.Collections.Generic;
 using DG.Tweening;
+using System;
+using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class PigenShitController : MonoBehaviour
 {
     public PlayerController player;
     public BuildingController buildingController;
-    
+
     public GameObject shitPrefab;
     public GameObject shitSplash;
     public Transform shitParent;
     public List<GameObject> shits = new List<GameObject>();
-    public List<Tuple<int,int>> shitsInt = new List<Tuple<int,int>>();
-    
+    public List<Tuple<int, int>> shitsInt = new List<Tuple<int, int>>();
+
+    private Tween tweenOfFullscreen;
+
     Tween tween;
     int LastplayerPos;
 
     private int roomWidth = 3;
 
 
-    
+
     // Start is called before the first frame update
     void Start()
     {
@@ -48,7 +50,7 @@ public class PigenShitController : MonoBehaviour
     public void UpdateBird()
     {
         var height = buildingController.height + 1;
-        
+
         for (int y = buildingController.map.GetLength(1) - 1; y > 0; y--)
         {
             for (int x = buildingController.map.GetLength(0) - 1; x >= 0; x--)
@@ -85,14 +87,27 @@ public class PigenShitController : MonoBehaviour
         Debug.Log("SHIT");
         var newShit = Instantiate(shitPrefab, shitParent);
         newShit.GetComponent<Shito>().player = this.player;
+        newShit.GetComponent<Shito>().onHit.AddListener(Hit);
+
         shits.Add(newShit);
-        
+
         newShit.transform.position = new Vector3(transform.position.x, (transform.position.y - 3), -1.1f);
     }
 
     public void Hit()
     {
-        Debug.Log("HIT");
-        //shitSplash.SetActive(true);
+        shitSplash.SetActive(true);
+        var spriteRenderer = shitSplash.GetComponent<Image>();
+        if (spriteRenderer != null)
+        {
+            if (tweenOfFullscreen != null && !tweenOfFullscreen.IsComplete())
+                tweenOfFullscreen.Kill();
+
+            spriteRenderer.color = new Color(spriteRenderer.color.r, spriteRenderer.color.g, spriteRenderer.color.b, 1f);
+            tweenOfFullscreen = spriteRenderer.DOFade(0f, 5f).OnComplete(() =>
+            {
+                shitSplash.SetActive(false);
+            });
+        }
     }
 }

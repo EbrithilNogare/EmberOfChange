@@ -69,8 +69,8 @@ public class BuildingController : MonoBehaviour
             case 0:
                 height = 10;
                 fireExtinguisherCount = 10;
-                fireCount = 5;
-                peopleCount = 10;
+                fireCount = 4;
+                peopleCount = 5;
                 break;
             case 1:
                 height = 20;
