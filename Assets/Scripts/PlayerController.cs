@@ -174,7 +174,7 @@ public class PlayerController : MonoBehaviour
         if (newPosition.y > playerPosition.y && oldRoom.type != BuildingController.RoomType.Stairs && oldRoom.type != BuildingController.RoomType.outsideStairs) // stairs up
             return false;
 
-        if (newPosition.y < playerPosition.y && newRoom.type != BuildingController.RoomType.Stairs && oldRoom.type != BuildingController.RoomType.outsideStairs) // stairs down
+        if (newPosition.y < playerPosition.y && newRoom.type != BuildingController.RoomType.Stairs && newRoom.type != BuildingController.RoomType.outsideStairs) // stairs down
             return false;
 
         if (newRoom.onFire) // fire check

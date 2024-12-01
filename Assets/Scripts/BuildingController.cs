@@ -285,6 +285,25 @@ public class BuildingController : MonoBehaviour
                 .DOMove(new Vector3(player.playerPosition.x * roomWidth, player.playerPosition.y * roomHeight, 0), 0.5f, false).SetEase(Ease.InSine)
                 .OnComplete(() => player.blockInputs = false);
         }
+
+        if (column == 1)
+        {
+            int currentFloor = map.GetLength(1) - 1;
+            for (; currentFloor >= 0 && map[0, currentFloor].type != RoomType.outsideStairs; currentFloor--) { }
+            map[0, currentFloor].type = RoomType.Empty;
+            Destroy(map[0, currentFloor].roomGameObject);
+            map[0, currentFloor].roomGameObject = null;
+        }
+
+        if (column == map.GetLength(0) - 2)
+        {
+            int currentFloor = map.GetLength(1) - 1;
+            int currentColumt = map.GetLength(0) - 1;
+            for (; currentFloor >= 0 && map[currentColumt, currentFloor].type != RoomType.outsideStairs; currentFloor--) { }
+            map[currentColumt, currentFloor].type = RoomType.Empty;
+            Destroy(map[currentColumt, currentFloor].roomGameObject);
+            map[currentColumt, currentFloor].roomGameObject = null;
+        }
     }
 
     void MoveRoomObject(int oldX, int oldY, int newX, int newY)
