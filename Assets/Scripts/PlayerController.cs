@@ -100,6 +100,17 @@ public class PlayerController : MonoBehaviour
         cameraController.smoothSpeed = .5f;
         Camera.main.GetComponent<CameraController>().target = animal.transform;
 
+
+        animator.SetBool("Kicking", true);
+        blockInputs = true;
+
+        DOTween.Sequence().AppendInterval(0.4f).AppendCallback(() => // wait
+        {
+            animator.SetBool("Kicking", false);
+            blockInputs = false;
+        });
+
+
         Sequence fallSequence = DOTween.Sequence();
         fallSequence.Append(animal.transform.DOMove(animal.transform.position + new Vector3(0, 0, fallTarget.z), .1f).SetEase(Ease.Linear));
         fallSequence.Append(animal.transform.DOMove(fallTarget, duration).SetEase(Ease.OutBounce));
@@ -163,7 +174,7 @@ public class PlayerController : MonoBehaviour
         if (newPosition.y > playerPosition.y && oldRoom.type != BuildingController.RoomType.Stairs && oldRoom.type != BuildingController.RoomType.outsideStairs) // stairs up
             return false;
 
-        if (newPosition.y < playerPosition.y && newRoom.type != BuildingController.RoomType.Stairs && oldRoom.type != BuildingController.RoomType.outsideStairs) // stairs down
+        if (newPosition.y < playerPosition.y && newRoom.type != BuildingController.RoomType.Stairs && newRoom.type != BuildingController.RoomType.outsideStairs) // stairs down
             return false;
 
         if (newRoom.onFire) // fire check
@@ -198,7 +209,7 @@ public class PlayerController : MonoBehaviour
         if (position.y > playerPosition.y && oldRoom.type != BuildingController.RoomType.Stairs && oldRoom.type != BuildingController.RoomType.outsideStairs) // stairs up
             return false;
 
-        if (position.y < playerPosition.y && newRoom.type != BuildingController.RoomType.Stairs && oldRoom.type != BuildingController.RoomType.outsideStairs) // stairs down
+        if (position.y < playerPosition.y && newRoom.type != BuildingController.RoomType.Stairs && newRoom.type != BuildingController.RoomType.outsideStairs) // stairs down
             return false;
 
         if (position.x > playerPosition.x && (oldRoom.type == BuildingController.RoomType.RightWall || newRoom.type == BuildingController.RoomType.LeftWall)) // fire to the right blocked by wall
@@ -215,6 +226,18 @@ public class PlayerController : MonoBehaviour
         if (statsManager.fireExtinguisher > 0)
         {
             statsManager.UseExtinguisher();
+
+
+            animator.SetBool("FireFighting", true);
+            blockInputs = true;
+
+            DOTween.Sequence().AppendInterval(1.4f).AppendCallback(() => // wait
+            {
+                animator.SetBool("FireFighting", false);
+                blockInputs = false;
+            });
+
+
             buildingController.ExtinguishFire(position.x, position.y, playerPosition.x, playerPosition.y);
             extinguishedFireThisTurn = true;
         }
