@@ -11,8 +11,12 @@ public class PlayerController : MonoBehaviour
     public StatsManager statsManager;
     public Vector2Int playerPosition;
     public Vector2 stepSize;
+    public Animator animator;
+    public SpriteRenderer spriteToFlip;
 
     private bool extinguishedFireThisTurn;
+
+    [HideInInspector]
     public bool blockInputs = false;
 
     public UnityEvent<int> onAnimalFalling;
@@ -37,6 +41,12 @@ public class PlayerController : MonoBehaviour
         Vector2Int newPosition = playerPosition;
         extinguishedFireThisTurn = false;
 
+        if (Input.GetKeyDown(KeyCode.Space))
+            PushAnimal(playerPosition.x, playerPosition.y);
+        if (Input.GetKeyDown(KeyCode.P))
+            EndGameAndJumpFromBuilding();
+
+
         if (Input.GetKeyDown(KeyCode.W) || Input.GetKeyDown(KeyCode.UpArrow))
         {
             newPosition = new Vector2Int(playerPosition.x, playerPosition.y + 1);
@@ -57,12 +67,10 @@ public class PlayerController : MonoBehaviour
             newPosition = new Vector2Int(playerPosition.x + 1, playerPosition.y);
             randomEventManager.eventComesInTurns--;
         }
-        else if (Input.GetKeyDown(KeyCode.Space))
-            PushAnimal(playerPosition.x, playerPosition.y);
-        else if (Input.GetKeyDown(KeyCode.P))
-            EndGameAndJumpFromBuilding();
         else
+        {
             return; // no action
+        }
 
         if (CanExtinguishFire(newPosition))
         {
@@ -116,8 +124,20 @@ public class PlayerController : MonoBehaviour
         }
 
         bool movingUpOrDown = math.abs(newPosition.y - playerPosition.y) > .1f;
+        animator.SetBool("Running", true);
+        spriteToFlip.flipX = newPosition.x < playerPosition.x;
+
         playerPosition = newPosition;
-        transform.DOMove(new Vector3(playerPosition.x * stepSize.x, playerPosition.y * stepSize.y, 0), 0.4f, false).SetEase(Ease.OutCubic);
+
+        blockInputs = true;
+        animator.
+        transform
+            .DOMove(new Vector3(playerPosition.x * stepSize.x, playerPosition.y * stepSize.y, 0), 0.4f, false).SetEase(Ease.Linear)
+            .OnComplete(() =>
+            {
+                blockInputs = false;
+                animator.SetBool("Running", false);
+            });
     }
 
     bool IsValidMove(Vector2Int newPosition)
