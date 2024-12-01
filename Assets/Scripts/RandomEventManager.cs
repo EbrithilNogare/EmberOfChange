@@ -141,7 +141,8 @@ public class RandomEventManager : MonoBehaviour
                 
                 if (ProbabilityFireMatrix[k, l].isInFire)
                 {
-                    if (ProbabilityFireMatrix[k, l].FireTickToDestoyed == 0)
+                    if (ProbabilityFireMatrix[k, l].FireTickToDestoyed == 0 &&
+                        l > 1)
                     {
                         OnRoomDestroyed.Invoke(k, l);
                         ColumnUpdate(k, l);
