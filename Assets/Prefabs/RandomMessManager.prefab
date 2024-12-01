@@ -45,6 +45,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   buildingController: {fileID: 0}
+  pigeonShitController: {fileID: 0}
   eventComesInTurns: 0
   eventComesInTurnsMax: 5
   eventComesInTurnsMin: 10
@@ -53,10 +54,11 @@ MonoBehaviour:
   spawnNewNumberOfFiresMin: 5
   fireTicks: 3
   ticksToPigeonShit: 0
-  ticksToPigeonShitMax: 0
-  ticksToPigeonShitMin: 0
+  ticksToPigeonShitMax: 3
+  ticksToPigeonShitMin: 8
   sequentialEvents: 0
   probabilityOfNeighbourFire: 0.2
+  bombDrop: 0
   OnPigeonFired:
     m_PersistentCalls:
       m_Calls: []
