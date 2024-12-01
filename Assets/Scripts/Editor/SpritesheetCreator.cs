@@ -12,13 +12,19 @@ public class SpritesheetCreator : EditorWindow
     [MenuItem("Tools/Spritesheet Creator")]
     public static void ShowWindow() => GetWindow<SpritesheetCreator>("Spritesheet Creator");
 
+    private void OnEnable()
+    {
+        folderPath = @"C:\Users\WheeroWeyi\Desktop\Active projects\EmberOfChange\Source\Animation Export";
+        LoadTexturesFromFolder(folderPath);
+    }
+
     private void OnGUI()
     {
         GUILayout.Label("Spritesheet Settings", EditorStyles.boldLabel);
 
         if (GUILayout.Button("Select Folder"))
         {
-            folderPath = EditorUtility.OpenFolderPanel("Select Folder with PNGs", "", "");
+            folderPath = EditorUtility.OpenFolderPanel("Select Folder with PNGs", folderPath, "");
             if (!string.IsNullOrEmpty(folderPath))
                 LoadTexturesFromFolder(folderPath);
         }
