@@ -973,6 +973,10 @@ PrefabInstance:
       propertyPath: randomEventManager
       value: 
       objectReference: {fileID: 0}
+    - target: {fileID: 2548272981117986925, guid: 74f0e5278ce00c54f939628f671ff284, type: 3}
+      propertyPath: animalsPrefab.Array.size
+      value: 2
+      objectReference: {fileID: 0}
     - target: {fileID: 5238924268303452095, guid: 74f0e5278ce00c54f939628f671ff284, type: 3}
       propertyPath: m_Name
       value: Building
