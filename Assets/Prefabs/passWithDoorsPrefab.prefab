@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 8314259716119829232}
   - component: {fileID: 5963780206582051053}
   - component: {fileID: 8767751842997871622}
+  - component: {fileID: 7134545366048742802}
   m_Layer: 0
   m_Name: passWithDoorsPrefab
   m_TagString: Untagged
@@ -83,3 +84,23 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
+--- !u!114 &7134545366048742802
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8994669005690676939}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 62544fccd20f159469d42d0f46774a16, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  prefabs:
+  - prefab: {fileID: 0}
+    weight: 20
+  - prefab: {fileID: 90240698094938038, guid: 3c63a62d347d36b4b8d12a08920c29df, type: 3}
+    weight: 7
+  - prefab: {fileID: 1791976796556076256, guid: bce3c2caf698920428f67ff2b61d708c, type: 3}
+    weight: 5
+  spawnPoint: {fileID: 8314259716119829232}
