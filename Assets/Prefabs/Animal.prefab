@@ -162,8 +162,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f5020427ef9b4fd4ba0e581fcb652770, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  chillSprite: {fileID: 0}
-  panicSprite: {fileID: 0}
 --- !u!95 &6695035574373027550
 Animator:
   serializedVersion: 5
