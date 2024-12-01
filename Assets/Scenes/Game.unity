@@ -1101,10 +1101,6 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 292465016}
     - target: {fileID: 4571448562815816066, guid: 67726c82d1beea448bd8606cfbd2cf9b, type: 3}
-      propertyPath: playerPosition.x
-      value: 4
-      objectReference: {fileID: 0}
-    - target: {fileID: 4571448562815816066, guid: 67726c82d1beea448bd8606cfbd2cf9b, type: 3}
       propertyPath: buildingController
       value: 
       objectReference: {fileID: 31700880}

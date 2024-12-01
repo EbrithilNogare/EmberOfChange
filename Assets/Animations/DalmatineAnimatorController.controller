@@ -88,7 +88,7 @@ AnimatorState:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: PandaRunDetermined
+  m_Name: DalmatineRunning
   m_Speed: 0.5
   m_CycleOffset: 0
   m_Transitions:
@@ -102,7 +102,7 @@ AnimatorState:
   m_MirrorParameterActive: 0
   m_CycleOffsetParameterActive: 0
   m_TimeParameterActive: 0
-  m_Motion: {fileID: 7400000, guid: bc7d0808e2cd2bb49b03721fc9854131, type: 2}
+  m_Motion: {fileID: 7400000, guid: b8d81043bc062244097d2bb372a4e7d5, type: 2}
   m_Tag: 
   m_SpeedParameter: 
   m_MirrorParameter: 
@@ -114,7 +114,7 @@ AnimatorController:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: TestAnimObject
+  m_Name: DalmatineAnimatorController
   serializedVersion: 5
   m_AnimatorParameters:
   - m_Name: Running
@@ -168,7 +168,7 @@ AnimatorState:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: PandaIdle
+  m_Name: DalmatineIdle
   m_Speed: 1
   m_CycleOffset: 0
   m_Transitions:
@@ -182,7 +182,7 @@ AnimatorState:
   m_MirrorParameterActive: 0
   m_CycleOffsetParameterActive: 0
   m_TimeParameterActive: 0
-  m_Motion: {fileID: 7400000, guid: 4c17e61f0ba89374185738a2996f8645, type: 2}
+  m_Motion: {fileID: 7400000, guid: 10c9d856149712e4f9a51e48f6b33608, type: 2}
   m_Tag: 
   m_SpeedParameter: 
   m_MirrorParameter: 
