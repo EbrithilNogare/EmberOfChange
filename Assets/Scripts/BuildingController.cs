@@ -58,6 +58,7 @@ public class BuildingController : MonoBehaviour
 
     public Room[,] map;
     public UnityEvent OnRoomDestroyed;
+    public PlayerController player;
 
     public RandomEventManager randomEventManager;
 
@@ -263,14 +264,23 @@ public class BuildingController : MonoBehaviour
             map[column, y] = map[column, y + 1];
             MoveRoomObject(column, y, column, y + 1);
         }
+
+        if (player.playerPosition.x == column && player.playerPosition.y >= floor)
+        {
+            player.blockInputs = true;
+            player.playerPosition.y--;
+            player.transform
+                .DOMove(new Vector3(player.playerPosition.x * roomWidth, player.playerPosition.y * roomHeight, 0), 0.5f, false).SetEase(Ease.InSine)
+                .OnComplete(() => player.blockInputs = false);
+        }
     }
 
     void MoveRoomObject(int oldX, int oldY, int newX, int newY)
     {
         if (map[newX, newY].roomGameObject != null)
-            map[newX, newY].roomGameObject.transform.DOMove(new Vector3(oldX * roomWidth, oldY * roomHeight, 0), 0.5f, false);
+            map[newX, newY].roomGameObject.transform.DOMove(new Vector3(oldX * roomWidth, oldY * roomHeight, 0), 0.5f, false).SetEase(Ease.InSine);
         if (map[newX, newY].innerGameObject != null)
-            map[newX, newY].innerGameObject.transform.DOMove(new Vector3(oldX * roomWidth, oldY * roomHeight, 0), 0.5f, false);
+            map[newX, newY].innerGameObject.transform.DOMove(new Vector3(oldX * roomWidth, oldY * roomHeight, 0), 0.5f, false).SetEase(Ease.InSine);
         map[oldX, oldY] = map[newX, newY];
         map[newX, newY] = new Room();
     }

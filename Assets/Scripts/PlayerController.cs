@@ -13,7 +13,7 @@ public class PlayerController : MonoBehaviour
     public Vector2 stepSize;
 
     private bool extinguishedFireThisTurn;
-    private bool blockInputs = false;
+    public bool blockInputs = false;
 
     public UnityEvent<int> onAnimalFalling;
 
