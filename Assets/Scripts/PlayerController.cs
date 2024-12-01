@@ -100,6 +100,17 @@ public class PlayerController : MonoBehaviour
         cameraController.smoothSpeed = .5f;
         Camera.main.GetComponent<CameraController>().target = animal.transform;
 
+
+        animator.SetBool("Kicking", true);
+        blockInputs = true;
+
+        DOTween.Sequence().AppendInterval(0.4f).AppendCallback(() => // wait
+        {
+            animator.SetBool("Kicking", false);
+            blockInputs = false;
+        });
+
+
         Sequence fallSequence = DOTween.Sequence();
         fallSequence.Append(animal.transform.DOMove(animal.transform.position + new Vector3(0, 0, fallTarget.z), .1f).SetEase(Ease.Linear));
         fallSequence.Append(animal.transform.DOMove(fallTarget, duration).SetEase(Ease.OutBounce));
@@ -215,6 +226,18 @@ public class PlayerController : MonoBehaviour
         if (statsManager.fireExtinguisher > 0)
         {
             statsManager.UseExtinguisher();
+
+
+            animator.SetBool("FireFighting", true);
+            blockInputs = true;
+
+            DOTween.Sequence().AppendInterval(1.4f).AppendCallback(() => // wait
+            {
+                animator.SetBool("FireFighting", false);
+                blockInputs = false;
+            });
+
+
             buildingController.ExtinguishFire(position.x, position.y, playerPosition.x, playerPosition.y);
             extinguishedFireThisTurn = true;
         }
