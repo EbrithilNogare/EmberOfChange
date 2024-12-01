@@ -26,7 +26,7 @@ public class PigenShitController : MonoBehaviour
     void Start()
     {
         player = FindObjectOfType<PlayerController>();
-        buildingController = FindObjectOfType<BuildingController>();
+        //buildingController = FindObjectOfType<BuildingController>();
         transform.position = new Vector3(0, (buildingController.height + 1) * roomWidth, player.transform.position.z);
         LastplayerPos = player.playerPosition.x * 3;
         transform.GetChild(0).DOLocalMoveY(0.4f, 0.5f, false).SetEase(Ease.Linear).SetLoops(-1, LoopType.Yoyo);
@@ -45,8 +45,22 @@ public class PigenShitController : MonoBehaviour
         }
     }
 
-    public void UpdateShits()
+    public void UpdateBird()
     {
+        var height = buildingController.height + 1;
+        
+        for (int y = buildingController.map.GetLength(1) - 1; y > 0; y--)
+        {
+            for (int x = buildingController.map.GetLength(0) - 1; x >= 0; x--)
+            {
+                if (buildingController.map[x, y].type != BuildingController.RoomType.Empty)
+                {
+                    height = y + 1;
+                    transform.position = new Vector3(transform.position.x, height * 3, transform.position.z);
+                    return;
+                }
+            }
+        }
         // Debug.Log("UPDATE SHIT");
         // foreach (var shit in shits)
         // {
