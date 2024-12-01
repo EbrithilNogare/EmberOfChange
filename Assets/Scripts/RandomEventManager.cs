@@ -124,7 +124,7 @@ public class RandomEventManager : MonoBehaviour
                         canFire = true,
                         isInFire = true,
                         FireProbability = 1f,
-                        FireTickToDestoyed = fireTicks
+                        FireTickToDestoyed = 0
                     };
 
                 }
@@ -135,7 +135,7 @@ public class RandomEventManager : MonoBehaviour
                         canFire = true,
                         isInFire = false,
                         FireProbability = 0f,
-                        FireTickToDestoyed = fireTicks
+                        FireTickToDestoyed = 0
                     };
                 }
             }
@@ -163,7 +163,7 @@ public class RandomEventManager : MonoBehaviour
                 
                 if (ProbabilityFireMatrix[k, l].isInFire)
                 {
-                    if (ProbabilityFireMatrix[k, l].FireTickToDestoyed == 0 &&
+                    if (ProbabilityFireMatrix[k, l].FireTickToDestoyed == 2 &&
                         l > 1)
                     {
                         OnRoomDestroyed.Invoke(k, l);
@@ -172,7 +172,22 @@ public class RandomEventManager : MonoBehaviour
                     }
                     else
                     {
-                        ProbabilityFireMatrix[k, l].FireTickToDestoyed--;
+                        var obj = buildingController.map[k, l].innerGameObject.transform;
+                        int index = 0;
+                        foreach(Transform child in obj)
+                        {
+                            if(child.gameObject.activeSelf)
+                                index = child.GetSiblingIndex();
+                        }
+
+                        if (index < 2)
+                        {
+                            obj.transform.GetChild(index).gameObject.SetActive(false);
+                            obj.transform.GetChild(index + 1).gameObject.SetActive(true);
+                        }
+
+                        //obj.GetChild(ProbabilityFireMatrix[k, l].FireTickToDestoyed).gameObject.SetActive(true);
+                        ProbabilityFireMatrix[k, l].FireTickToDestoyed++;
                     }
                 }
             }

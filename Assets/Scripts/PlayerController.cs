@@ -110,6 +110,7 @@ public class PlayerController : MonoBehaviour
             blockInputs = false;
         });
 
+        animal.GetComponent<Animator>().SetTrigger("Falling");
 
         Sequence fallSequence = DOTween.Sequence();
         fallSequence.Append(animal.transform.DOMove(animal.transform.position + new Vector3(0, 0, fallTarget.z), -0.1f).SetEase(Ease.Linear));
