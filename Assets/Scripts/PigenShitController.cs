@@ -96,6 +96,7 @@ public class PigenShitController : MonoBehaviour
 
     public void Hit()
     {
+        GetComponent<AudioSource>().Play();
         shitSplash.SetActive(true);
         var spriteRenderer = shitSplash.GetComponent<Image>();
         if (spriteRenderer != null)

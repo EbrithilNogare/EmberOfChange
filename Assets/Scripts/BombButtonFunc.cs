@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -15,19 +13,20 @@ public class BombButtonFunc : MonoBehaviour
         if (buildingController == null)
             buildingController = FindObjectOfType<BuildingController>();
         toggle = FindObjectOfType<BombsController>().gameObject.GetComponent<Toggle>();
-        
-        if(randomEventManager == null)
+
+        if (randomEventManager == null)
             randomEventManager = FindObjectOfType<RandomEventManager>();
     }
 
     // Update is called once per frame
     void Update()
     {
-        
+
     }
 
     public void BombColumn()
     {
+        GetComponent<AudioSource>().Play();
         buildingController.CollapseColumn(transform.GetSiblingIndex() + 1, 2);
         toggle.isOn = false;
         transform.parent.gameObject.SetActive(false);
