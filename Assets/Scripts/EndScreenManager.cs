@@ -10,6 +10,6 @@ public class EndScreenManager : MonoBehaviour
     public void PlayAgain()
     {
         Store.Instance.ResetStore();
-        UnityEngine.SceneManagement.SceneManager.LoadScene("Game");
+        UnityEngine.SceneManagement.SceneManager.LoadScene("MainMenu");
     }
 }

@@ -257,6 +257,9 @@ public class PlayerController : MonoBehaviour
         onAnimalFalling.Invoke(playerPosition.x);
         Camera.main.GetComponent<CameraController>().smoothSpeed = .5f;
 
+        //i was here >:)
+        animator.Play("Fall", 0);
+
         Sequence fallSequence = DOTween.Sequence();
         fallSequence.Append(transform.DOMove(new Vector3(playerPosition.x * stepSize.x, playerPosition.y * stepSize.y + 0.8f, fallTarget.z), .4f).SetEase(Ease.InCubic));
         fallSequence.Append(transform.DOMove(fallTarget, duration).SetEase(Ease.OutBounce));
