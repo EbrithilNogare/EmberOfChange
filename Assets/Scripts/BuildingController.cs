@@ -62,6 +62,30 @@ public class BuildingController : MonoBehaviour
 
     public RandomEventManager randomEventManager;
 
+    private void Awake()
+    {
+        switch (Store.Instance.difficulty)
+        {
+            case 0:
+                height = 10;
+                fireExtinguisherCount = 10;
+                fireCount = 5;
+                peopleCount = 10;
+                break;
+            case 1:
+                height = 20;
+                fireExtinguisherCount = 10;
+                fireCount = 16;
+                peopleCount = 10;
+                break;
+            case 2:
+                height = 50;
+                fireExtinguisherCount = 40;
+                fireCount = 30;
+                peopleCount = 20;
+                break;
+        }
+    }
     void Start()
     {
         map = new Room[width, height];

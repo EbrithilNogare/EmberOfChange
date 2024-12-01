@@ -26,7 +26,7 @@ public class PlayerController : MonoBehaviour
         statsManager = FindObjectOfType<StatsManager>();
         if (randomEventManager == null)
             randomEventManager = FindObjectOfType<RandomEventManager>();
-        transform.position = new Vector3(playerPosition.x * stepSize.x, playerPosition.y * stepSize.y, 0);
+        transform.position = new Vector3(playerPosition.x * stepSize.x, playerPosition.y * stepSize.y, 0.1f);
     }
 
     void Update()
@@ -145,14 +145,14 @@ public class PlayerController : MonoBehaviour
 
         if (movingUpOrDown)
         {
-            animator.transform.DOMove(new Vector3(playerPosition.x * stepSize.x, playerPosition.y * stepSize.y, 0), 0.4f, false).SetEase(Ease.OutBack);
+            animator.transform.DOMove(new Vector3(playerPosition.x * stepSize.x, playerPosition.y * stepSize.y, 0.1f), 0.4f, false).SetEase(Ease.OutBack);
         }
         else
         {
             animator.SetBool("Running", true);
             animator.
             transform
-                .DOMove(new Vector3(playerPosition.x * stepSize.x, playerPosition.y * stepSize.y, 0), 0.4f, false).SetEase(Ease.Linear)
+                .DOMove(new Vector3(playerPosition.x * stepSize.x, playerPosition.y * stepSize.y, 0.1f), 0.4f, false).SetEase(Ease.Linear)
                 .OnComplete(() =>
                 {
                     animator.SetBool("Running", false);
