@@ -211,7 +211,7 @@ Animator:
   m_GameObject: {fileID: 4764355689029314417}
   m_Enabled: 1
   m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 101836888ef34894498f71001692d5ee, type: 2}
   m_CullingMode: 0
   m_UpdateMode: 0
   m_ApplyRootMotion: 0
@@ -356,6 +356,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   buildingController: {fileID: 0}
   playerController: {fileID: 0}
+  leftKangarooAnimator: {fileID: 3957260504490742994}
+  rightKangarooAnimator: {fileID: 7476290333722415151}
 --- !u!1 &6810053252118992875
 GameObject:
   m_ObjectHideFlags: 0
@@ -515,7 +517,7 @@ Animator:
   m_GameObject: {fileID: 8961665322502837324}
   m_Enabled: 1
   m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 101836888ef34894498f71001692d5ee, type: 2}
   m_CullingMode: 0
   m_UpdateMode: 0
   m_ApplyRootMotion: 0
