@@ -230,7 +230,7 @@ public class PlayerController : MonoBehaviour
 
             animator.SetBool("FireFighting", true);
             blockInputs = true;
-
+            spriteToFlip.flipX = position.x < playerPosition.x;
             DOTween.Sequence().AppendInterval(1.4f).AppendCallback(() => // wait
             {
                 animator.SetBool("FireFighting", false);
