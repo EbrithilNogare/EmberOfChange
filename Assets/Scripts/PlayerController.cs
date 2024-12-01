@@ -109,6 +109,10 @@ public class PlayerController : MonoBehaviour
             cameraController.smoothSpeed = cameraSpeed;
             cameraController.target = transform;
             Destroy(animal);
+
+            if (Store.Instance.deadAnimals + Store.Instance.savedAnimals == buildingController.peopleCount) //end the game
+                EndGameAndJumpFromBuilding();
+
         }); // todo maybe add some fadeout
         buildingController.map[x, y].withAnimal = false;
         buildingController.map[x, y].innerGameObject = null;
@@ -124,18 +128,25 @@ public class PlayerController : MonoBehaviour
         }
 
         bool movingUpOrDown = math.abs(newPosition.y - playerPosition.y) > .1f;
-        animator.SetBool("Running", true);
         spriteToFlip.flipX = newPosition.x < playerPosition.x;
 
         playerPosition = newPosition;
 
-        animator.
-        transform
-            .DOMove(new Vector3(playerPosition.x * stepSize.x, playerPosition.y * stepSize.y, 0), 0.4f, false).SetEase(Ease.Linear)
-            .OnComplete(() =>
-            {
-                animator.SetBool("Running", false);
-            });
+        if (movingUpOrDown)
+        {
+            animator.transform.DOMove(new Vector3(playerPosition.x * stepSize.x, playerPosition.y * stepSize.y, 0), 0.4f, false).SetEase(Ease.OutBack);
+        }
+        else
+        {
+            animator.SetBool("Running", true);
+            animator.
+            transform
+                .DOMove(new Vector3(playerPosition.x * stepSize.x, playerPosition.y * stepSize.y, 0), 0.4f, false).SetEase(Ease.Linear)
+                .OnComplete(() =>
+                {
+                    animator.SetBool("Running", false);
+                });
+        }
     }
 
     bool IsValidMove(Vector2Int newPosition)
@@ -209,18 +220,20 @@ public class PlayerController : MonoBehaviour
         }
     }
 
-    void EndGameAndJumpFromBuilding()
+    public void EndGameAndJumpFromBuilding()
     {
         blockInputs = true;
 
-        Vector3 fallTarget = new Vector3(transform.position.x + .5f, 1f, transform.position.z - 1.3f);
+        Store.Instance.deadAnimals = buildingController.peopleCount - Store.Instance.savedAnimals;
+
+        Vector3 fallTarget = new Vector3(playerPosition.x * stepSize.x + .5f, 1f, -1.3f);
         float duration = Mathf.Max(.1f, Mathf.Sqrt(2 * Mathf.Max(.01f, transform.position.y - 1) / 9.81f)) * 1.2f;
 
         onAnimalFalling.Invoke(playerPosition.x);
         Camera.main.GetComponent<CameraController>().smoothSpeed = .5f;
 
         Sequence fallSequence = DOTween.Sequence();
-        fallSequence.Append(transform.DOMove(transform.position + new Vector3(0, 0.8f, fallTarget.z), .4f).SetEase(Ease.InCubic));
+        fallSequence.Append(transform.DOMove(new Vector3(playerPosition.x * stepSize.x, playerPosition.y * stepSize.y + 0.8f, fallTarget.z), .4f).SetEase(Ease.InCubic));
         fallSequence.Append(transform.DOMove(fallTarget, duration).SetEase(Ease.OutBounce));
         fallSequence.Join(transform.DORotate(new Vector3(0, 0, 90), duration, RotateMode.Fast).SetEase(Ease.Linear));
         fallSequence.OnKill(() =>

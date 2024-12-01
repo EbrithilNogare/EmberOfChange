@@ -581,7 +581,7 @@ Light:
     m_Type: 2
     m_Resolution: -1
     m_CustomResolution: -1
-    m_Strength: 0.3
+    m_Strength: 0.4
     m_Bias: 0.05
     m_NormalBias: 0.4
     m_NearPlane: 1.92
@@ -827,7 +827,7 @@ PrefabInstance:
     - target: {fileID: 2548272981117986925, guid: 74f0e5278ce00c54f939628f671ff284, type: 3}
       propertyPath: randomEventManager
       value: 
-      objectReference: {fileID: 2044593060}
+      objectReference: {fileID: 0}
     - target: {fileID: 5238924268303452095, guid: 74f0e5278ce00c54f939628f671ff284, type: 3}
       propertyPath: m_Name
       value: Building

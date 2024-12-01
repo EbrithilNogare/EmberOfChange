@@ -100,9 +100,9 @@ public class BuildingController : MonoBehaviour
             map[stairX, y].type = RoomType.Stairs;
         }
 
-        PlaceRandomElements(fireCount, true, false, false);
-        PlaceRandomElements(peopleCount, false, true, false);
-        PlaceRandomElements(fireExtinguisherCount, false, false, true);
+        PlaceRandomElements(fireCount - 1, true, false, false);
+        PlaceRandomElements(peopleCount - 1, false, true, false);
+        PlaceRandomElements(fireExtinguisherCount - 1, false, false, true);
 
         PlaceTutorialSetup();
     }
@@ -201,7 +201,13 @@ public class BuildingController : MonoBehaviour
 
         if (map[x, y].withAnimal)
         {
+            map[x, y].withAnimal = false;
+
+            // todo kill animal visually
+
             Store.Instance.deadAnimals++;
+            if (Store.Instance.deadAnimals + Store.Instance.savedAnimals == peopleCount) //end the game
+                player.EndGameAndJumpFromBuilding();
         }
 
         if (map[x, y].innerGameObject != null)
@@ -246,6 +252,12 @@ public class BuildingController : MonoBehaviour
 
     public void CollapseColumn(int column, int floor)
     {
+        if (map[column, floor].withAnimal && Store.Instance.deadAnimals + Store.Instance.savedAnimals == peopleCount) // end the game
+        {
+            player.EndGameAndJumpFromBuilding();
+            return;
+        }
+
         map[column, floor].type = RoomType.Empty;
         map[column, floor].onFire = false;
         map[column, floor].withAnimal = false;

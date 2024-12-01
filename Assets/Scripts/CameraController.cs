@@ -10,6 +10,8 @@ public class CameraController : MonoBehaviour
     public float verticalOffset = 2f;
     public float initialHorizontalFOV;
 
+    private float shakeOffsetX = 0f;
+
     private void Start()
     {
         buildingController = FindObjectOfType<BuildingController>();
@@ -23,14 +25,17 @@ public class CameraController : MonoBehaviour
 
     void LateUpdate()
     {
-        Vector3 desiredPosition = new Vector3(transform.position.x, target.position.y + verticalOffset, transform.position.z);
+        Vector3 desiredPosition = new Vector3(transform.position.x + shakeOffsetX, target.position.y + verticalOffset, transform.position.z);
         Vector3 smoothedPosition = Vector3.Lerp(transform.position, desiredPosition, smoothSpeed);
         transform.position = smoothedPosition;
     }
 
     void ShakeCamera()
     {
-        transform.DOShakePosition(0.8f, new Vector3(0.2f, 0.2f, 0f), 10, 10f, false, true, ShakeRandomnessMode.Full);
+        transform.DOComplete();
+        transform.DOShakePosition(0.8f, new Vector3(0.2f, 0f, 0f), 10, 10f, false, true, ShakeRandomnessMode.Full)
+            .OnUpdate(() => shakeOffsetX = transform.position.x - transform.position.x)
+            .OnComplete(() => shakeOffsetX = 0f);
     }
 
     void MaintainHorizontalFOV()
