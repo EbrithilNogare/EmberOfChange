@@ -196,7 +196,7 @@ public class BuildingController : MonoBehaviour
                 if (room.withAnimal)
                 {
                     int randomAnimalIndex = Random.Range(0, animalsPrefab.Length);
-                    Vector3 position = new Vector3(x * roomWidth, y * roomHeight, 0.2f);
+                    Vector3 position = new Vector3(x * roomWidth, y * roomHeight, -0.4f);
                     map[x, y].innerGameObject = Instantiate(animalsPrefab[randomAnimalIndex], position, Quaternion.identity, transform);
                 }
             }
