@@ -235,10 +235,10 @@ public class PlayerController : MonoBehaviour
             {
                 animator.SetBool("FireFighting", false);
                 blockInputs = false;
+                buildingController.ExtinguishFire(position.x, position.y, playerPosition.x, playerPosition.y);
             });
 
 
-            buildingController.ExtinguishFire(position.x, position.y, playerPosition.x, playerPosition.y);
             extinguishedFireThisTurn = true;
         }
     }
