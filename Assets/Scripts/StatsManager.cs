@@ -5,8 +5,8 @@ public class StatsManager : MonoBehaviour
 {
     [SerializeField]
     public float health = 100f;
-    public int maxFireExtinguisherCount = 5;
-    public int fireExtinguisher = 5;
+    public int maxFireExtinguisherCount;
+    public int fireExtinguisher;
 
     [SerializeField] private int[] playerPosition;
 
@@ -17,7 +17,6 @@ public class StatsManager : MonoBehaviour
     void Awake()
     {
         health = 100f;
-        fireExtinguisher = 5;
         playerPosition = new int[2];
     }
 

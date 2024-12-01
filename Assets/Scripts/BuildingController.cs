@@ -102,6 +102,24 @@ public class BuildingController : MonoBehaviour
         PlaceRandomElements(fireCount, true, false, false);
         PlaceRandomElements(peopleCount, false, true, false);
         PlaceRandomElements(fireExtinguisherCount, false, false, true);
+
+        PlaceTutorialSetup();
+    }
+
+    void PlaceTutorialSetup()
+    {
+        map[2, 0].type = RoomType.LeftWall;
+        map[3, 0].type = RoomType.RightWall;
+        map[4, 0].type = RoomType.Pass;
+        map[5, 0].type = RoomType.Pass;
+        map[6, 0].type = RoomType.Stairs;
+        map[7, 0].type = RoomType.RightWall;
+
+        map[2, 1].type = RoomType.Stairs;
+        map[3, 1].type = RoomType.Pass; map[3, 1].withAnimal = true;
+        map[4, 1].type = RoomType.PassWithDoors; map[4, 1].onFire = true;
+        map[5, 1].type = RoomType.Pass; map[5, 1].containsFireExtinguisher = true;
+        map[6, 1].type = RoomType.RightWall;
     }
 
     void PlaceRandomElements(int count, bool fire, bool animal, bool containsFireExtinguisher)
@@ -113,7 +131,7 @@ public class BuildingController : MonoBehaviour
             if (loopCount++ > 10000) throw new System.Exception("Infinite Loop");
 
             int x = Random.Range(1, width - 1);
-            int y = Random.Range(1, height);
+            int y = Random.Range(2, height);
             if (emptyRooms.Contains(map[x, y].type) && !map[x, y].onFire && !map[x, y].withAnimal)
             {
                 map[x, y].onFire = fire;
