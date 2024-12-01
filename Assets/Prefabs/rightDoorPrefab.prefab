@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 5963780206582051053}
   - component: {fileID: 8767751842997871622}
   - component: {fileID: 4363572621228899687}
+  - component: {fileID: 3254259198507981687}
   m_Layer: 0
   m_Name: rightDoorPrefab
   m_TagString: Untagged
@@ -106,3 +107,23 @@ MeshCollider:
   m_Convex: 0
   m_CookingOptions: 30
   m_Mesh: {fileID: 7362600711776144337, guid: 714b4273f357c5b49a4e2ec53f977682, type: 3}
+--- !u!114 &3254259198507981687
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8994669005690676939}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 62544fccd20f159469d42d0f46774a16, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  prefabs:
+  - prefab: {fileID: 0}
+    weight: 20
+  - prefab: {fileID: 5717234680590307452, guid: 3c63a62d347d36b4b8d12a08920c29df, type: 3}
+    weight: 7
+  - prefab: {fileID: 471096039256692609, guid: bce3c2caf698920428f67ff2b61d708c, type: 3}
+    weight: 5
+  spawnPoint: {fileID: 8314259716119829232}
