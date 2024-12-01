@@ -36,6 +36,7 @@ public class RandomEventManager : MonoBehaviour
     [Header("------CONST------")]
     [SerializeField] public bool sequentialEvents = false;
     [SerializeField] public float probabilityOfNeighbourFire;
+    [SerializeField] public bool bombDrop = false;
 
     [Header("------EVENTS------")]
     public UnityEvent OnPigeonFired;
