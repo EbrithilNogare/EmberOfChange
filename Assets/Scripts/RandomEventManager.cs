@@ -15,6 +15,7 @@ public class RandomEventManager : MonoBehaviour
     }
 
     [SerializeField] BuildingController buildingController;
+    [SerializeField] private PigenShitController pigeonShitController;
     [Header("------EVENT TICKS------")]
     [SerializeField] public int eventComesInTurns;
     [SerializeField] private int eventComesInTurnsMax;
@@ -59,9 +60,15 @@ public class RandomEventManager : MonoBehaviour
         {
             buildingController = FindObjectOfType<BuildingController>();
         }
+
+        if (pigeonShitController == null)
+        {
+            pigeonShitController = FindObjectOfType<PigenShitController>();
+        }
         ProbabilityFireMatrix = new FireRoom[buildingController.width, buildingController.height];
 
         eventComesInTurns = Random.Range(eventComesInTurnsMin, eventComesInTurnsMax);
+        ticksToPigeonShit = Random.Range(ticksToPigeonShitMin, ticksToPigeonShitMax);
     }
 
     // Update is called once per frame
@@ -80,11 +87,25 @@ public class RandomEventManager : MonoBehaviour
 
         }
 
+        if (ticksToPigeonShit == 0)
+        {
+            ticksToPigeonShit = Random.Range(ticksToPigeonShitMin, ticksToPigeonShitMax);
+            pigeonShitController.Shit();
+        }
+        
+
         if (eventComesInTurns == 0)
         {
             tick = true;
             eventComesInTurns = Random.Range(eventComesInTurnsMin, eventComesInTurnsMax);
         }
+    }
+
+    public void turnsUpdate()
+    {
+        eventComesInTurns--;
+        ticksToPigeonShit--;
+        pigeonShitController.UpdateShits();
     }
 
     void FillFireMatrix()
@@ -228,7 +249,6 @@ public class RandomEventManager : MonoBehaviour
             spawnNewNumberOfFires = fires.Count;
         }
 
-        Debug.Log("TO BE SPAWNED: " + spawnNewNumberOfFires);
         for (int i = 0; i < spawnNewNumberOfFires; i++)
         {
             var rnd = Random.Range(0, fires.Count);
@@ -268,11 +288,17 @@ public class RandomEventManager : MonoBehaviour
             //     finalFire = new Tuple<int, int>(k, l + 1);
             // }
 
+            if (buildingController.player.playerPosition.x == finalFire.Item1 &&
+                buildingController.player.playerPosition.y == finalFire.Item2)
+            {
+                fires.RemoveAt(rnd);
+                return;
+            }
+
             ProbabilityFireMatrix[finalFire.Item1, finalFire.Item2].isInFire = true;
             ProbabilityFireMatrix[finalFire.Item1, finalFire.Item2].FireProbability = 1;
             OnFireSpawn.Invoke(finalFire.Item1, finalFire.Item2);
             fires.RemoveAt(rnd);
-            Debug.Log("Fire Spawned: X " + finalFire.Item1 + " Y " + finalFire.Item2); ;
 
         }
 

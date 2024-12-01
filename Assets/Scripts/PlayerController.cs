@@ -50,22 +50,22 @@ public class PlayerController : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.W) || Input.GetKeyDown(KeyCode.UpArrow))
         {
             newPosition = new Vector2Int(playerPosition.x, playerPosition.y + 1);
-            randomEventManager.eventComesInTurns--;
+            randomEventManager.turnsUpdate();
         }
         else if (Input.GetKeyDown(KeyCode.A) || Input.GetKeyDown(KeyCode.LeftArrow))
         {
             newPosition = new Vector2Int(playerPosition.x - 1, playerPosition.y);
-            randomEventManager.eventComesInTurns--;
+            randomEventManager.turnsUpdate();
         }
         else if (Input.GetKeyDown(KeyCode.S) || Input.GetKeyDown(KeyCode.DownArrow))
         {
             newPosition = new Vector2Int(playerPosition.x, playerPosition.y - 1);
-            randomEventManager.eventComesInTurns--;
+            randomEventManager.turnsUpdate();
         }
         else if (Input.GetKeyDown(KeyCode.D) || Input.GetKeyDown(KeyCode.RightArrow))
         {
             newPosition = new Vector2Int(playerPosition.x + 1, playerPosition.y);
-            randomEventManager.eventComesInTurns--;
+            randomEventManager.turnsUpdate();
         }
         else
         {

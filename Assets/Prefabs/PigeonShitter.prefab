@@ -1,0 +1,86 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1001 &8727703378012887064
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 5572350665504966433, guid: 4363acafcbeb8834f85edc008c9bb9fd, type: 3}
+      propertyPath: m_Name
+      value: PigeonShitter
+      objectReference: {fileID: 0}
+    - target: {fileID: 7386318433303566743, guid: 4363acafcbeb8834f85edc008c9bb9fd, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7386318433303566743, guid: 4363acafcbeb8834f85edc008c9bb9fd, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7386318433303566743, guid: 4363acafcbeb8834f85edc008c9bb9fd, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7386318433303566743, guid: 4363acafcbeb8834f85edc008c9bb9fd, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7386318433303566743, guid: 4363acafcbeb8834f85edc008c9bb9fd, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7386318433303566743, guid: 4363acafcbeb8834f85edc008c9bb9fd, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7386318433303566743, guid: 4363acafcbeb8834f85edc008c9bb9fd, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7386318433303566743, guid: 4363acafcbeb8834f85edc008c9bb9fd, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7386318433303566743, guid: 4363acafcbeb8834f85edc008c9bb9fd, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7386318433303566743, guid: 4363acafcbeb8834f85edc008c9bb9fd, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    m_RemovedComponents:
+    - {fileID: 7277747279088353254, guid: 4363acafcbeb8834f85edc008c9bb9fd, type: 3}
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 5572350665504966433, guid: 4363acafcbeb8834f85edc008c9bb9fd, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 5791238359617638556}
+  m_SourcePrefab: {fileID: 100100000, guid: 4363acafcbeb8834f85edc008c9bb9fd, type: 3}
+--- !u!1 &3768370027413806905 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 5572350665504966433, guid: 4363acafcbeb8834f85edc008c9bb9fd, type: 3}
+  m_PrefabInstance: {fileID: 8727703378012887064}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &5791238359617638556
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3768370027413806905}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ca3e3bbcc0cc74543b6325eefd15e9d5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  player: {fileID: 0}
+  buildingController: {fileID: 0}
+  shitPrefab: {fileID: 4503074177257602014, guid: 18cc15ce988dede4dbf7e48dd5d52132, type: 3}
+  shitSplash: {fileID: 0}
+  shitParent: {fileID: 0}
+  shits: []
