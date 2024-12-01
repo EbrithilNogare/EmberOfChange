@@ -1,27 +1,17 @@
-using System;
-using System.Collections;
-using System.Collections.Generic;
-using System.ComponentModel;
 using UnityEngine;
-using UnityEngine.UIElements;
+using UnityEngine.Events;
 
 public class Shito : MonoBehaviour
 {
     public PlayerController player;
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
+    public UnityEvent onHit;
 
-    // Update is called once per frame
     void Update()
     {
-        transform.position -= new Vector3(0,1.5f * Time.deltaTime,0);
-        if ((transform.position.y - player.transform.position.y - .8 < 0.3f) &&
-            (Math.Abs(transform.position.x - player.transform.position.x) < 1f))
+        transform.position -= new Vector3(0, 1.5f * Time.deltaTime, 0);
+        if (Vector3.Distance(transform.position, player.transform.position + new Vector3(0, 0.3f, 0)) < 2.5f)
         {
-            Debug.Log("SHIIIIIIT on the face");
+            onHit.Invoke();
             Destroy(gameObject);
         }
 

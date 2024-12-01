@@ -315,7 +315,7 @@ PrefabInstance:
     - target: {fileID: 5791238359617638556, guid: 8792211c08300fb4fae08e5736710ff9, type: 3}
       propertyPath: shitSplash
       value: 
-      objectReference: {fileID: 0}
+      objectReference: {fileID: 1198609882}
     - target: {fileID: 5791238359617638556, guid: 8792211c08300fb4fae08e5736710ff9, type: 3}
       propertyPath: buildingController
       value: 
@@ -398,6 +398,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d301d9a098306424196f781b874571ec, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!1 &1198609882 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 1999027908706035684, guid: e346b0abadeef09488be87df5d012b51, type: 3}
+  m_PrefabInstance: {fileID: 2147650244597024225}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1264240839
 GameObject:
   m_ObjectHideFlags: 0
