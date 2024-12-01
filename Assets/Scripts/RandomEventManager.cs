@@ -105,7 +105,7 @@ public class RandomEventManager : MonoBehaviour
     {
         eventComesInTurns--;
         ticksToPigeonShit--;
-        pigeonShitController.UpdateShits();
+        
     }
 
     void FillFireMatrix()
@@ -168,6 +168,7 @@ public class RandomEventManager : MonoBehaviour
                     {
                         OnRoomDestroyed.Invoke(k, l);
                         ColumnUpdate(k, l);
+                        pigeonShitController.UpdateBird();
                     }
                     else
                     {
