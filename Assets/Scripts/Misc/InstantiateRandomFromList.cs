@@ -17,7 +17,7 @@ public class InstantiateRandomFromList : MonoBehaviour
     void Start()
     {
         GameObject selectedPrefab = GetRandomPrefab();
-        if (selectedPrefab != null)
+        if (selectedPrefab != null && transform.position.y > 4)
         {
             Instantiate(selectedPrefab, spawnPoint.position, spawnPoint.rotation);
         }
