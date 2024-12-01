@@ -61,12 +61,13 @@ MonoBehaviour:
   firePrefab: {fileID: 8997349515218818118, guid: f7f712f0cc257bb4ca904f5263ba356a, type: 3}
   animalsPrefab:
   - {fileID: 8997349515218818118, guid: b37d6762f1582074e80ce740b5dbf95b, type: 3}
-  - {fileID: 8997349515218818118, guid: 2035148fe3384b44ca0f05b6840d1801, type: 3}
-  - {fileID: 8997349515218818118, guid: 5a86fdaf1e6463b4294794f916dd19f5, type: 3}
-  - {fileID: 8997349515218818118, guid: 597ca960258787a4c935b0133e40a0c6, type: 3}
+  - {fileID: 8997349515218818118, guid: 2893631dbf00bb44d98383a133a039d0, type: 3}
+  - {fileID: 8997349515218818118, guid: 80685b246a789584ba5e8fd057c226a1, type: 3}
+  - {fileID: 8997349515218818118, guid: 4c71f522065e27f4da773b1db7e3cedf, type: 3}
   roomWidth: 3
   roomHeight: 3
   OnRoomDestroyed:
     m_PersistentCalls:
       m_Calls: []
+  player: {fileID: 0}
   randomEventManager: {fileID: 0}
