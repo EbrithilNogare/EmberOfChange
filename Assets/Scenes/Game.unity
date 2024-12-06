@@ -989,6 +989,17 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 7937037237555980721, guid: 87a768541b8b8bb46a756e79fdda0b2a, type: 3}
   m_PrefabInstance: {fileID: 2044593058}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &2044593060 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 28318025172332575, guid: 87a768541b8b8bb46a756e79fdda0b2a, type: 3}
+  m_PrefabInstance: {fileID: 2044593058}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cd1122c7d6f779e4c8d2c1fe7635e1e0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &2147650244597024225
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1109,7 +1120,7 @@ PrefabInstance:
     - target: {fileID: 2548272981117986925, guid: 74f0e5278ce00c54f939628f671ff284, type: 3}
       propertyPath: randomEventManager
       value: 
-      objectReference: {fileID: 0}
+      objectReference: {fileID: 2044593060}
     - target: {fileID: 2548272981117986925, guid: 74f0e5278ce00c54f939628f671ff284, type: 3}
       propertyPath: animalsPrefab.Array.size
       value: 2
@@ -1214,6 +1225,10 @@ PrefabInstance:
     - target: {fileID: 5779423226082474150, guid: 09fea82dd446b3f46a607c44a93e1e7b, type: 3}
       propertyPath: m_Name
       value: Kangoroo
+      objectReference: {fileID: 0}
+    - target: {fileID: 5779423226082474150, guid: 09fea82dd446b3f46a607c44a93e1e7b, type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -1394,9 +1409,17 @@ PrefabInstance:
       propertyPath: buildingController
       value: 
       objectReference: {fileID: 31700880}
+    - target: {fileID: 4571448562815816066, guid: 67726c82d1beea448bd8606cfbd2cf9b, type: 3}
+      propertyPath: randomEventManager
+      value: 
+      objectReference: {fileID: 2044593060}
     - target: {fileID: 4662087103740004355, guid: 67726c82d1beea448bd8606cfbd2cf9b, type: 3}
       propertyPath: m_Name
       value: Player
+      objectReference: {fileID: 0}
+    - target: {fileID: 4662087103740004355, guid: 67726c82d1beea448bd8606cfbd2cf9b, type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -1454,6 +1477,10 @@ PrefabInstance:
     - target: {fileID: 9024670912601591082, guid: 7deac7d08a91bf44eacff384acfa7301, type: 3}
       propertyPath: m_Name
       value: Tutorial graffiti
+      objectReference: {fileID: 0}
+    - target: {fileID: 9024670912601591082, guid: 7deac7d08a91bf44eacff384acfa7301, type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
